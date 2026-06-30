@@ -5,7 +5,7 @@ event_type: "Invention"
 disciplines: ['Chemistry', 'Manufacturing']
 associated_people: ['goodyear-charles']
 headline: "Charles Goodyear accidentally drops rubber on a stove and changes transportation."
-image: "vulcanized-rubber.jpg"
+image: "charles-goodyear.png"
 ---
 
 Before 1844, rubber was a mess: it melted in the summer and cracked in the winter. Charles Goodyear spent years trying to fix it. Legend has it he accidentally dropped a mixture of rubber and sulfur onto a hot stove. 
