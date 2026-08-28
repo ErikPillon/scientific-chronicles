@@ -1,5 +1,5 @@
 ---
-name: "John Higson "Jack""
+name: "John Higson \"Jack\""
 surname: "Cover"
 gender: "Male"
 nationality:

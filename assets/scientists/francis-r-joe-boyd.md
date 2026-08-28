@@ -1,5 +1,5 @@
 ---
-name: "Francis R. "Joe""
+name: "Francis R. \"Joe\""
 surname: "Boyd"
 gender: "Male"
 nationality:

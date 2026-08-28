@@ -1,5 +1,5 @@
 ---
-title: The Dartmouth Workshop: Birth of Artificial Intelligence
+title: "The Dartmouth Workshop: Birth of Artificial Intelligence"
 date: 1956-07-01
 event_type: Scientific Concept Origin / Conference
 disciplines: [Computer Science, Cognitive Science, Mathematics]

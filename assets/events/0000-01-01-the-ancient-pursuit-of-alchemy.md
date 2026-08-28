@@ -1,6 +1,6 @@
 ---
 title: "The Ancient Pursuit of Alchemy"
-date: 0000-01-01
+date: 0001-01-01
 event_type: "Proto-science; Historical Practice"
 disciplines: ["Chemistry", "Metallurgy", "Philosophy", "Medicine", "Mysticism"]
 associated_people: "Zosimos of Panopolis, Geber, Paracelsus, Isaac Newton"

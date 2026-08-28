@@ -1,5 +1,5 @@
 ---
-name: "Aaron "Bunny""
+name: "Aaron \"Bunny\""
 surname: "Lapin"
 gender: "Male"
 nationality:

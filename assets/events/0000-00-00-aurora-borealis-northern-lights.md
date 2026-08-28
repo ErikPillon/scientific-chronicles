@@ -1,6 +1,6 @@
 ---
 title: "Aurora Borealis (Northern Lights)"
-date: 0000-00-00
+date: 0001-01-01
 event_type: "Natural Phenomenon"
 disciplines: ["Physics", "Astronomy", "Geophysics"]
 associated_people: "Galileo Galilei, Kristian Birkeland"

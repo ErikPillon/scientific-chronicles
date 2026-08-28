@@ -1,6 +1,6 @@
 ---
 title: "Development of the Egg Incubator"
-date: 0000-00-00
+date: 0001-01-01
 event_type: "Invention"
 disciplines: ["Agriculture", "Engineering", "Biology"]
 associated_people: ""
