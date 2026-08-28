@@ -6,6 +6,42 @@
   <title>Era Explorer | {{ site.Title }}</title>
   <link rel="stylesheet" href="{{ `css/site.css` | relURL }}">
   <style>
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      z-index: 50;
+      transition: width 80ms linear;
+    }
+    .era-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .era-pill {
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+    .era-pill:hover {
+      transform: translateY(-1px);
+      border-color: rgba(37, 99, 235, 0.35);
+    }
+    .era-pill.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.25);
+    }
     .era-detail-container {
       display: none;
     }
@@ -25,7 +61,7 @@
       bottom: 0;
       left: 20px;
       width: 4px;
-      background: #eee;
+      background: rgba(148, 163, 184, 0.25);
       border-radius: 2px;
       z-index: 0;
     }
@@ -103,7 +139,7 @@
     }
     .back-link {
       display: inline-block;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-decoration: none;
       color: #007acc;
       font-weight: bold;
@@ -111,9 +147,33 @@
     .back-link:hover {
       text-decoration: underline;
     }
+    .back-to-top {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: 0 14px 34px rgba(37, 99, 235, 0.32);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(0.5rem);
+      transition: opacity 200ms ease, transform 200ms ease;
+      z-index: 40;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scroll-progress"></div>
   <div class="shell">
     <div class="container">
       <header class="nav">
@@ -124,6 +184,9 @@
         <nav class="nav-links" aria-label="Primary">
           <a href="#" id="today-nav-link">Today's Breakthrough</a>
           <a href="/eras/">Eras & Epics</a>
+          {{/*  <a href="/categories/">Fields of Study</a>
+          <a href="/hall-of-fame/">Hall of Fame</a>
+          <a href="#" id="random-nav-link">I'm Feeling Curious</a>  */}}
           <a href="/quizzes/">Quizzes</a>
           <a href="/about/">The Lab</a>
         </nav>
@@ -131,7 +194,13 @@
 
       <main class="page-main">
         <a href="/eras/" class="back-link">← Back to Eras & Epics</a>
-        
+
+        <nav class="era-switcher" role="tablist" aria-label="Choose an era" id="era-switcher">
+          {{ range $key, $era := .Site.Params.eras }}
+            <a href="/era-detail/?era={{ $key }}" class="era-pill" data-era="{{ $key }}" role="tab">{{ $era.title }}</a>
+          {{ end }}
+        </nav>
+
         {{ $events := slice }}
         {{ range resources.Match "events/*.md" }}
           {{ $parts := split .Content "---" }}
@@ -146,70 +215,134 @@
 
         <div id="eras-content">
           {{ range $key, $era := .Site.Params.eras }}
-            <div class="era-detail-container" id="era-{{ $key }}">
-              <section class="page-hero">
+            {{ $eraEvents := slice }}
+            {{ range $events }}
+              {{ $eventDisciplines := .disciplines | default slice }}
+              {{ $match := intersect $era.tags $eventDisciplines }}
+              {{ if gt (len $match) 0 }}
+                {{ $eraEvents = $eraEvents | append . }}
+              {{ end }}
+            {{ end }}
+            <div class="era-detail-container" id="era-{{ $key }}" data-era-title="{{ $era.title }}">
+              <section class="page-hero page-hero-single">
                 <div class="page-hero-copy">
                   <span class="eyebrow">Era Explorer</span>
                   <h1 id="era-title">{{ $era.title }}</h1>
                   <p>{{ $era.description }}</p>
+
+                  <div class="stats" aria-label="Era stats">
+                    <div class="stat">
+                      <strong>{{ len $eraEvents }}</strong>
+                      <span>Milestones on this timeline</span>
+                    </div>
+                    {{ range $era.tags }}
+                      <div class="stat"><strong>🏷️ {{ . }}</strong><span>Discipline</span></div>
+                    {{ end }}
+                  </div>
                 </div>
               </section>
 
               <div class="events-scroll">
                 <div class="timeline-line"></div>
-                {{ range $events }}
-                  {{ $eventDisciplines := .disciplines | default slice }}
-                  {{ $match := intersect $era.tags $eventDisciplines }}
-                  {{ if gt (len $match) 0 }}
-                    <div class="event-wrapper fade-in-scroll">
-                      <div class="timeline-dot"></div>
-                      <div class="event-card dynamic-scroll-card">
-                        <div class="event-card-header">
-                          <h3>{{ .title }}</h3>
-                          <span class="event-date">{{ .date }}</span>
-                        </div>
-                        <p class="headline">{{ .headline }}</p>
-                        
-                        <button class="expand-btn">Read more</button>
-                        <div class="event-body">
-                          {{ .body }}
-                          {{ if .image }}
-                            <img src="/images/{{ .image }}" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 1rem;" alt="{{ .title }}">
-                          {{ end }}
-                        </div>
+                {{ range $eraEvents }}
+                  <div class="event-wrapper fade-in-scroll">
+                    <div class="timeline-dot"></div>
+                    <div class="event-card dynamic-scroll-card">
+                      <div class="event-card-header">
+                        <h3>{{ .title }}</h3>
+                        <span class="event-date">{{ .date }}</span>
+                      </div>
+                      <p class="headline">{{ .headline }}</p>
+
+                      <button class="expand-btn">Read more</button>
+                      <div class="event-body">
+                        {{ .body }}
+                        {{ if .image }}
+                          <img src="/images/{{ .image }}" style="max-width: 100%; height: auto; border-radius: 4px; margin-top: 1rem;" alt="{{ .title }}">
+                        {{ end }}
                       </div>
                     </div>
-                  {{ end }}
+                  </div>
+                {{ else }}
+                  <div class="empty-state">
+                    <p>No milestones tagged for this era yet. Check back soon.</p>
+                  </div>
                 {{ end }}
               </div>
             </div>
           {{ end }}
-          
+
           <div id="era-not-found" class="era-detail-container">
-            <h2>Era not found</h2>
-            <p>Please select a valid era from the <a href="/eras/">Eras & Epics</a> page.</p>
+            <section class="page-hero-copy" style="max-width: 40rem;">
+              <span class="eyebrow">Era Explorer</span>
+              <h2 id="prompt-heading">Pick an era to start exploring</h2>
+              <p id="prompt-text">Choose one of the eras above to scroll through a curated timeline of the milestones that defined it.</p>
+            </section>
           </div>
         </div>
 
       </main>
     </div>
   </div>
-  
+
+  <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to top">↑</a>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const eraId = urlParams.get('era');
-      
-      if (eraId) {
-        const target = document.getElementById('era-' + eraId);
+      const switcher = document.getElementById('era-switcher');
+      const pills = switcher.querySelectorAll('.era-pill');
+      const containers = document.querySelectorAll('.era-detail-container');
+      const notFound = document.getElementById('era-not-found');
+      const promptHeading = document.getElementById('prompt-heading');
+      const promptText = document.getElementById('prompt-text');
+      const siteTitle = document.title.split('|').pop().trim();
+
+      function activateEra(eraId, updateHistory) {
+        containers.forEach(c => c.classList.remove('active'));
+        pills.forEach(p => p.classList.remove('active'));
+
+        let target = null;
+        if (eraId) {
+          target = document.getElementById('era-' + eraId);
+        }
+
         if (target) {
           target.classList.add('active');
+          const pill = switcher.querySelector('.era-pill[data-era="' + eraId + '"]');
+          if (pill) pill.classList.add('active');
+          document.title = target.dataset.eraTitle + ' | Era Explorer | ' + siteTitle;
         } else {
-          document.getElementById('era-not-found').classList.add('active');
+          if (eraId) {
+            promptHeading.textContent = 'Era not found';
+            promptText.innerHTML = 'We couldn\'t find "' + eraId + '". Pick a valid era above, or head back to <a href="/eras/">Eras &amp; Epics</a>.';
+          } else {
+            promptHeading.textContent = 'Pick an era to start exploring';
+            promptText.textContent = 'Choose one of the eras above to scroll through a curated timeline of the milestones that defined it.';
+          }
+          notFound.classList.add('active');
+          document.title = 'Era Explorer | ' + siteTitle;
         }
-      } else {
-        document.getElementById('era-not-found').classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        requestAnimationFrame(updateTimelineScroll);
+
+        if (updateHistory) {
+          const url = eraId ? '/era-detail/?era=' + eraId : '/era-detail/';
+          window.history.pushState({ era: eraId }, '', url);
+        }
       }
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', function(e) {
+          e.preventDefault();
+          activateEra(this.dataset.era, true);
+        });
+      });
+
+      window.addEventListener('popstate', function() {
+        const params = new URLSearchParams(window.location.search);
+        activateEra(params.get('era'), false);
+      });
 
       // Expandable Cards Logic
       const expandBtns = document.querySelectorAll('.expand-btn');
@@ -231,31 +364,31 @@
       function updateTimelineScroll() {
         const wrappers = document.querySelectorAll('.fade-in-scroll');
         const viewportCenter = window.innerHeight / 2;
-        
+
         wrappers.forEach(wrapper => {
           // Only animate cards in the currently active era
           if (wrapper.closest('.era-detail-container.active') === null) return;
-          
+
           const card = wrapper.querySelector('.dynamic-scroll-card');
           const dot = wrapper.querySelector('.timeline-dot');
           const rect = wrapper.getBoundingClientRect();
           const cardCenter = rect.top + rect.height / 2;
           const distanceToCenter = Math.abs(viewportCenter - cardCenter);
           const maxDistance = window.innerHeight / 1.5;
-          
+
           let ratio = distanceToCenter / maxDistance;
           ratio = Math.min(Math.max(ratio, 0), 1);
-          
+
           // Card scales from 1 (center) to 0.85 (edges)
           const scale = 1 - (ratio * 0.15);
           // Opacity fades out non-linearly towards edges
           const opacity = 1 - Math.pow(ratio, 1.5);
-          
+
           if (card) {
             card.style.transform = `scale(${scale})`;
             card.style.opacity = Math.max(opacity, 0.2); // keep a minimum opacity
           }
-          
+
           if (dot) {
             // Highlight the active dot
             if (ratio < 0.25) {
@@ -269,15 +402,49 @@
         });
       }
 
+      const progressBar = document.getElementById('scroll-progress');
+      const backToTop = document.getElementById('back-to-top');
+
+      function updateScrollChrome() {
+        const activeScroll = document.querySelector('.era-detail-container.active .events-scroll');
+        if (activeScroll) {
+          const rect = activeScroll.getBoundingClientRect();
+          const total = rect.height - window.innerHeight;
+          const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+          const pct = total > 0 ? (scrolled / total) * 100 : 0;
+          progressBar.style.width = pct + '%';
+        } else {
+          progressBar.style.width = '0%';
+        }
+
+        if (window.scrollY > 600) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }
+
+      backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       window.addEventListener('scroll', () => {
         requestAnimationFrame(updateTimelineScroll);
+        requestAnimationFrame(updateScrollChrome);
       }, { passive: true });
       window.addEventListener('resize', () => {
         requestAnimationFrame(updateTimelineScroll);
+        requestAnimationFrame(updateScrollChrome);
       }, { passive: true });
-      
-      // Initialize state
-      setTimeout(() => requestAnimationFrame(updateTimelineScroll), 50);
+
+      // Initialize state from the URL
+      const initialParams = new URLSearchParams(window.location.search);
+      activateEra(initialParams.get('era'), false);
+      setTimeout(() => {
+        requestAnimationFrame(updateTimelineScroll);
+        requestAnimationFrame(updateScrollChrome);
+      }, 50);
     });
   </script>
   <script src="/js/nav.js"></script>

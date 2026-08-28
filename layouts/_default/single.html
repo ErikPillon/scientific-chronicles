@@ -16,25 +16,75 @@
         </a>
         <nav class="nav-links" aria-label="Primary">
           <a href="#" id="today-nav-link">Today's Breakthrough</a>
-          <a href="/categories/">Fields of Study</a>
-          <a href="/tags/">Eras & Epics</a>
+          <a href="/eras/">Eras & Epics</a>
+          {{/*  <a href="/categories/">Fields of Study</a>
           <a href="/hall-of-fame/">Hall of Fame</a>
-          <a href="#" id="random-nav-link">I'm Feeling Curious</a>
+          <a href="#" id="random-nav-link">I'm Feeling Curious</a>  */}}
+          <a href="/quizzes/">Quizzes</a>
           <a href="/about/">The Lab</a>
         </nav>
       </header>
 
       <main class="page-main">
-        <section class="page-hero">
+        {{ $scientistCount := len (resources.Match "scientists/*.md") }}
+        {{ $eventCount := len (resources.Match "events/*.md") }}
+        {{ $dayCount := len (where site.RegularPages "Section" "date") }}
+        {{ $eraCount := len site.Params.eras }}
+
+        <section class="page-hero page-hero-single">
           <div class="page-hero-copy">
+            <span class="eyebrow">About the project</span>
             <h1>{{ .Title }}</h1>
             {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
+
+            <div class="stats" aria-label="Site coverage">
+              <div class="stat">
+                <strong>{{ $dayCount }}</strong>
+                <span>Days covered</span>
+              </div>
+              <div class="stat">
+                <strong>{{ $scientistCount }}</strong>
+                <span>Scientists profiled</span>
+              </div>
+              <div class="stat">
+                <strong>{{ $eventCount }}</strong>
+                <span>Milestones logged</span>
+              </div>
+              <div class="stat">
+                <strong>{{ $eraCount }}</strong>
+                <span>Eras to explore</span>
+              </div>
+            </div>
           </div>
         </section>
 
         <div class="site-content list-panel" style="margin-top: 2rem;">
           {{ .Content }}
         </div>
+
+        <section style="margin-top: 3rem;">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Start exploring</span>
+              <h2>Three ways into the archive</h2>
+            </div>
+          </div>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.5rem;">
+            <a class="feature" href="#" id="today-nav-link">
+              <strong>📅 Daily Chronicles</strong>
+              <p>Jump to today, or any date, and see who was born, who died, and what broke through.</p>
+            </a>
+            <a class="feature" href="/eras/">
+              <strong>🧭 Era Explorer</strong>
+              <p>Scroll a curated timeline through the Space Race, the Quantum Era, and more.</p>
+            </a>
+            <a class="feature" href="/quizzes/">
+              <strong>🧩 Quizzes</strong>
+              <p>Short, sharp challenges pulled straight from the history of discovery.</p>
+            </a>
+          </div>
+        </section>
       </main>
     </div>
   </div>

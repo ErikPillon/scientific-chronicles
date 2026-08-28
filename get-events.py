@@ -84,7 +84,11 @@ def main(start_date):
                 match = re.match(r"(-?\d+)-(\d{2})-(\d{2})", date_val)
                 if match:
                     _, month, day = map(int, match.groups())
-                    if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), datetime.date(year=2026, month=month, day=day)):
+                    try:
+                        event_date = datetime.date(year=2026, month=month, day=day)
+                    except ValueError:
+                        continue
+                    if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), event_date):
                         event_type = "Birth" if key == "birth_date" else "Death"
                         print(
                             f" - [{event_type}] {name} ({date_val}) - {metadata.get('headline', '')}"
@@ -106,7 +110,11 @@ def main(start_date):
             match = re.match(r"(-?\d+)-(\d{2})-(\d{2})", date_val)
             if match:
                 _, month, day = map(int, match.groups())
-                if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), datetime.date(year=2026, month=month, day=day)):
+                try:
+                    event_date = datetime.date(year=2026, month=month, day=day)
+                except ValueError:
+                    continue
+                if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), event_date):
                     print(
                         f" - [Event] {metadata.get('title', '')} ({date_val}) - {metadata.get('headline', '')}"
                     )
@@ -127,7 +135,11 @@ def main(start_date):
             match = re.match(r"(-?\d+)-(\d{2})-(\d{2})", date_val)
             if match:
                 _, month, day = map(int, match.groups())
-                if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), datetime.date(year=2026, month=month, day=day)):
+                try:
+                    event_date = datetime.date(year=2026, month=month, day=day)
+                except ValueError:
+                    continue
+                if is_in_next_week(datetime.date(year=2026, month=target_month, day=target_day), event_date):
                     print(
                         f" - [Other Event] {metadata.get('title', '')} ({date_val}) - {metadata.get('headline', '')}"
                     )

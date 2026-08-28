@@ -1,0 +1,91 @@
+Searching for scientific personalities and events on the week of July 06...
+ - [Death] Jacob Aall Bonnevie Bjerknes (1975-07-07) - A pioneering meteorologist who developed the polar front theory and explained El Niño.
+ - [Death] Edward Goodrich Acheson (1931-07-06) - An ingenious American chemist and inventor celebrated for creating carborundum (silicon carbide) and synthetic graphite, revolutionizing industrial materials.
+ - [Birth] Ian Wilmut (1944-07-07) - A British embryologist famous for leading the team that created Dolly the sheep, the first mammal cloned from an adult somatic cell.
+ - [Death] Jean Picard (1682-07-12) - The astronomer who measured a chunk of France so precisely it let Newton check his math on gravity.
+ - [Birth] Claude Bernard (1813-07-12) - The 'father of modern experimental physiology,' he introduced the concept of the 'milieu intérieur' (internal environment).
+ - [Birth] Hans Spemann (1869-07-07) - This German embryologist won a Nobel Prize for discovering the 'organizer effect' in embryonic development, showing how cells tell each other what to become.
+ - [Death] Amedeo Avogadro (1856-07-09) - The Italian scientist who hypothesized that equal volumes of gases contain an equal number of molecules, revolutionizing our understanding of chemistry.
+ - [Death] Charles Stewart Rolls (1910-07-12) - The dashing British pioneer who co-founded Rolls-Royce and was a daring early aviator.
+ - [Death] David Douglas (1834-07-12) - The intrepid Scottish botanist who introduced the magnificent Douglas fir and countless other plants to the Western world!
+ - [Birth] J. Carson Mark (1913-07-06) - A brilliant Canadian-American mathematician and physicist who played a pivotal role in the Manhattan Project and the development of nuclear weapons.
+ - [Birth] Friedrich Gustav Jacob de Henle (1809-07-09) - A leading anatomist and pathologist, he is best known for his detailed description of the loop of Henle in the kidney and his early insights into germ theory.
+ - [Birth] David Eli Lilienthal (1899-07-08) - The dynamic public servant who championed large-scale infrastructure and led America's early atomic energy efforts!
+ - [Birth] Alfred Binet (1857-07-08) - French psychologist who invented the first practical intelligence test, shaping modern psychometrics.
+ - [Death] Ananda Mohan Chakrabarty (2020-07-10) - The pioneering microbiologist who genetically engineered an oil-eating bacterium and won a landmark Supreme Court case.
+ - [Death] Clifford Beers (1943-07-09) - The American mental health advocate whose personal struggle sparked a national movement for humane treatment of the mentally ill.
+ - [Death] Frank Stephen Baldwin (1925-07-08) - An American inventor known for creating significant improvements in calculating machines, particularly the pinwheel calculator.
+ - [Death] Hyman G. Rickover (1986-07-08) - The Father of the Nuclear Navy: Admiral Rickover, with an iron will, revolutionized naval power by ushering in the age of nuclear submarines.
+ - [Death] Clyde Edward Wiegand (1996-07-06) - The Physicist Who Helped Catch an Antiproton!
+ - [Death] Henry Havelock Ellis (1939-07-08) - A groundbreaking English physician and social reformer, widely considered one of the pioneers of sexology.
+ - [Birth] Ben R. Mottelson (1926-07-09) - Shared the Nobel Prize in Physics for groundbreaking work on the collective model of atomic nuclei.
+ - [Birth] Alvan Graham Clark (1832-07-10) - The astronomer and optical craftsman who discovered Sirius B while testing one of his own magnificent lenses.
+ - [Birth] Axel Hugo Teodor Theorell (1903-07-06) - The Swedish biochemist who won the Nobel Prize for his discoveries concerning the nature and mode of action of oxidation enzymes.
+ - [Death] Herman Kahn (1983-07-07) - The controversial American futurist and military strategist whose grim analyses of nuclear war scenarios profoundly influenced Cold War thinking.
+ - [Death] Alexander Goldenweiser (1940-07-06) - A leading anthropologist and student of Franz Boas, he significantly contributed to the understanding of cultural evolution and diffusion.
+ - [Birth] George Graham (1673-07-07) - The master British clockmaker and inventor who revolutionized timekeeping accuracy with his ingenious escapements.
+ - [Death] Georg Simon Ohm (1854-07-06) - A German physicist famous for formulating Ohm's Law, which describes the fundamental relationship between voltage, current, and resistance in an electrical circuit.
+ - [Death] Ernst Curtius (1896-07-11) - A classical archaeologist and historian who brought ancient Greece back to life through his extensive excavations.
+ - [Birth] Dominique-Jean Larrey (1766-07-08) - The Napoleonic surgeon who revolutionized battlefield medicine with his 'flying ambulances'.
+ - [Birth] Alexander Wilson (1766-07-06) - The \"Father of American Ornithology,\" who meticulously documented North American bird species.
+ - [Birth] Eugene Eisenmann (1906-07-06) - The influential American ornithologist who meticulously documented Neotropical birds and championed bird conservation.
+ - [Birth] Franz Uri Boas (1858-07-09) - Often hailed as the 'Father of American Anthropology' for championing cultural relativism and scientific rigor.
+ - [Birth] Nikola Tesla (1856-07-10) - Pioneering Serbian-American inventor and electrical engineer whose theoretical work and patents on alternating current (AC) electrical systems laid the foundation for the Second Industrial Revolution.
+ - [Birth] Gabriel Gustav Valentin (1811-07-08) - This German-Swiss physiologist was a microscope maestro, pioneering histology and embryology.
+ - [Birth] Antoine de Jussieu (1686-07-06) - Antoine de Jussieu, a French botanist, contributed to plant classification and introduced the coffee tree to France.
+ - [Death] Bengt I. Samuelsson (2024-07-07) - Shared the Nobel Prize for groundbreaking discoveries concerning prostaglandins and related biologically active substances.
+ - [Death] Franz Weidenreich (1948-07-11) - A pivotal paleoanthropologist who meticulously studied 'Peking Man' fossils and proposed a multi-regional theory of human origins.
+ - [Birth] Audrey Isabel Richards (1899-07-08) - A pioneering British social anthropologist, she reshaped our understanding of African societies and nutrition.
+ - [Birth] James Dunwoody Brownson De Bow (1820-07-10) - The influential Southern statistician and publisher who meticulously documented the antebellum economy and society.
+ - [Birth] Aleksandr Mikhailovich Prokhorov (1916-07-11) - A Nobel laureate Soviet physicist who co-invented the maser and laser, revolutionizing fields from communications to medicine.
+ - [Death] Alain Bombard (2005-07-09) - French physician Alain Bombard famously crossed the Atlantic alone in a small raft, proving humans could survive at sea without provisions.
+ - [Death] Christiaan Huygens (1695-07-08) - A polymath of the Dutch Golden Age, Christiaan Huygens invented the pendulum clock, discovered Saturn's moon Titan, and proposed the wave theory of light.
+ - [Birth] Eli Lilly (1838-07-08) - A Civil War veteran who founded a pharmaceutical empire, revolutionizing drug manufacturing.
+ - [Birth] Igor Tamm (1895-07-08) - A Soviet theoretical physicist who shared the Nobel Prize for his work on the Cherenkov effect and contributed significantly to the Soviet H-bomb project.
+ - [Birth] Austin Bradford Hill (1897-07-08) - The British statistician and epidemiologist who, with Richard Doll, famously linked smoking to lung cancer and established criteria for causation.
+ - [Birth] Henry David Thoreau (1817-07-12) - The transcendentalist thinker who became America's original environmentalist, documenting nature with poetic precision.
+ - [Birth] Albert Léon Charles Calmette (1863-07-12) - French physician and bacteriologist, co-developer of the BCG vaccine, the first effective vaccine against tuberculosis.
+ - [Birth] Elias Howe (1819-07-09) - The ingenious American inventor who patented the first lockstitch sewing machine, forever changing textile production.
+ - [Birth] Elias James Corey (1928-07-12) - A Nobel laureate in Chemistry, famous for developing groundbreaking strategies in organic synthesis, notably retrosynthesis.
+ - [Birth] Guido Pontecorvo (1907-07-09) - The pioneering geneticist who mapped genes in fungi, revealing how recombination works without sex.
+ - [Death] Charles Caldwell (1853-07-09) - An early American physician and a major, albeit misguided, proponent of phrenology.
+ - [Birth] Ferdinand Adolf Heinrich August Graf von Zeppelin (1838-07-08) - A visionary military officer, he pioneered the design and construction of rigid airships, making his name synonymous with the giant 'Zeppelin' aircraft.
+ - [Birth] George Eastman (1854-07-12) - The photography pioneer who put a camera in everyone's hands and coined the word \"Kodak.\
+ - [Birth] Henri Paul Cartan (1904-07-08) - A brilliant mathematician who co-founded the influential Bourbaki group and significantly advanced modern algebraic topology.
+ - [Death] Germain Sommeiller (1871-07-11) - A pioneering Italian civil engineer famous for designing and overseeing the construction of the Frejus Rail Tunnel (Mont Cenis Tunnel) through the Alps.
+ - [Birth] Camillo Golgi (1843-07-07) - The Italian physician and scientist who discovered the Golgi apparatus and revolutionized the study of the nervous system.
+ - [Birth] Gregg L. Semenza (1956-07-12) - The Oxygen Oracle Who Unlocked Our Cells' Survival Secrets!
+ - [Birth] Elisabeth Kübler-Ross (1926-07-08) - The pioneering Swiss-American psychiatrist who introduced the five stages of grief, transforming our understanding of dying.
+ - [Birth] César Lattes (1924-07-11) - This brilliant Brazilian physicist was a key player in the discovery of the pion, a fundamental particle of the universe.
+ - [Birth] James B. Pollack (1940-07-09) - A leading planetary scientist whose research illuminated the atmospheres and climates of Venus, Mars, and Earth.
+ - [Death] Frank Schlesinger (1945-07-10) - An American astronomer renowned for his pioneering work in astronomical photography and the accurate determination of stellar parallaxes.
+ - [Birth] Jacob Perkins (1766-07-09) - A prolific American inventor known for innovations in refrigeration, printing, and steam power.
+ - [Death] Cyrus West Field (1892-07-12) - This intrepid American entrepreneur connected continents by leading the impossible task of laying the first transatlantic telegraph cable.
+ - [Birth] John Wheeler (1911-07-09) - The physicist who coined 'black hole' and 'wormhole,' making some of the universe's weirdest objects easier to talk about.
+ - [Death] Anne McLaren (2007-07-07) - A visionary British developmental biologist whose work on mice paved the way for human in vitro fertilization (IVF).
+ - [Event] William Howe's Patent for the Howe Truss (1840-07-10) - The patent that revolutionized bridge building: Introducing the ingenious Howe Truss!
+ - [Event] Robert Fulton's Pioneering Antifouling Paint Patent (1812-07-07) - Before making waves with steamboats, Robert Fulton snagged the first U.S. patent for antifouling paint, keeping ships shipshape beneath the waterline.
+ - [Event] Heike Kamerlingh Onnes Successfully Liquefies Helium (1908-07-10) - A Dutch physicist chilled helium gas colder than anyone thought physically achievable, and opened the door to superconductivity.
+ - [Event] Robotic Gallbladder Surgery using the da Vinci Surgical System (2000-07-11) - The da Vinci Robot brings precision to the operating room, making gallbladder removal a high-tech affair!
+ - [Event] Invention of the Etch-A-Sketch (1960-07-12) - The iconic red framed drawing toy that charmed generations with its magical metallic screen and two little knobs.
+ - [Event] Robert Goddard's First Rocket Patent Granted (1914-07-07) - Robert Goddard secured his first patent for a multi-stage rocket, setting the conceptual foundation for all future space travel.
+ - [Event] Andrée's Arctic Balloon Expedition (1897-07-11) - A daring, ill-fated Swedish attempt to reach the North Pole by hydrogen balloon, ending in tragedy and mystery.
+ - [Event] The Scopes 'Monkey' Trial Begins in Dayton, Tennessee (1925-07-10) - A small-town substitute teacher was put on trial for teaching evolution, and the case became a national media circus about science versus scripture.
+ - [Event] Patent for the Three-Point Seatbelt (1962-07-10) - Nils Bohlin patents the simple strap that has saved millions of lives.
+ - [Event] The Lituya Bay Megatsunami: Earth's Tallest Wave (1958-07-09) - A massive earthquake in Alaska triggered the Lituya Bay megatsunami, producing the highest wave run-up ever recorded at an astonishing 1,720 feet.
+ - [Event] The Invention of the Price Computing Scale (1891-07-07) - The retail world gets a mathematical upgrade as the first practical computing scales automate pricing based on weight.
+ - [Event] Launch of Telstar 1, the First Active Communications Satellite (1962-07-10) - Telstar 1, the pioneering active communications satellite, ushered in an era of instant global communication, shrinking the world and connecting continents.
+ - [Event] First Electroencephalogram (EEG) Recorded (1924-07-06) - Hans Berger finds a way to listen to the brain's electrical hum.
+ - [Other Event] The Bahamas gained independence (1973-07-10) - The Bahamas gained independence
+ - [Other Event] Donald Bradman scores 309 runs (1930-07-11) - Donald Bradman scores 309 runs
+ - [Other Event] Dive Bar Day established (2018-07-07) - Dive Bar Day established
+ - [Other Event] World Chocolate Day (0002-07-07) - World Chocolate Day
+ - [Other Event] British Navy ended rum ration (Black Tot Day) (1970-07-10) - British Navy ended rum ration (Black Tot Day)
+ - [Other Event] The Rolling Stones' first gig (1962-07-12) - The Rolling Stones' first gig
+ - [Other Event] Fashion Day Inception (2016-07-09) - Fashion Day Inception
+ - [Other Event] British Navy retires rum ration (1970-07-11) - British Navy retires rum ration
+ - [Other Event] Black Tot Day (1970-07-12) - Black Tot Day
+ - [Other Event] Introduction of the US Dollar (1785-07-06) - Introduction of the US Dollar
+ - [Other Event] Tom Hanks' Birthday (0002-07-09) - Tom Hanks' Birthday
+ - [Other Event] Biggest Wave Ever in Lituya Bay (1958-07-09) - Biggest Wave Ever in Lituya Bay
+ - [Other Event] Roswell UFO Incident (1947-07-07) - Roswell UFO Incident

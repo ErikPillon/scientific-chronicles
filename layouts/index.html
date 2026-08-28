@@ -36,22 +36,22 @@
 
             <div class="cta-row">
               <a class="btn btn-primary" href="#date-picker">Jump to a date</a>
-              <a class="btn btn-secondary" href="/categories/">Browse taxonomies</a>
+              <a class="btn btn-secondary" href="/eras/">Explore the eras</a>
             </div>
 
             <div class="stats" aria-label="Highlights">
-              <div class="stat">
+              <a class="stat" href="/era-detail/?era=dna_discovery">
                 <strong>🧬 Medical Marvels</strong>
                 <span>Cures, vaccines, and biology</span>
-              </div>
-              <div class="stat">
+              </a>
+              <a class="stat" href="/era-detail/?era=space_race">
                 <strong>🚀 Space & Beyond</strong>
                 <span>Satellites, rovers, and stargazing</span>
-              </div>
-              <div class="stat">
+              </a>
+              <a class="stat" href="/era-detail/?era=quantum_era">
                 <strong>⚡ Physics & Tech</strong>
                 <span>Lasers, atoms, and computing</span>
-              </div>
+              </a>
             </div>
 
             {{ with site.Home.Content }}
@@ -79,18 +79,18 @@
             </div>
 
             <div class="feature-grid">
-              <section class="feature">
+              <a class="feature" href="/era-detail/?era=periodic_table">
                 <strong>The Atomic Age</strong>
                 <p>Journey back to the era when we unlocked the power of the nucleus and changed the world forever.</p>
-              </section>
-              <section class="feature">
+              </a>
+              <a class="feature" href="/era-detail/?era=space_race">
                 <strong>The Space Race</strong>
                 <p>Relive the adrenaline-fueled sprint to the stars, from the first satellite to walking on the moon.</p>
-              </section>
-              <section class="feature">
+              </a>
+              <a class="feature" href="/era-detail/?era=quantum_era">
                 <strong>The Digital Revolution</strong>
                 <p>Trace the spark of the first transistors to the sprawling web of modern computing.</p>
-              </section>
+              </a>
             </div>
           </aside>
         </div>
