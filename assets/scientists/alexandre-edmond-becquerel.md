@@ -1,18 +1,18 @@
 ---
-name: "Alexandre Edmond"
-surname: "Becquerel"
-gender: "Male"
-nationality:
-  - "French"
-birth_date: "1820-03-24"
-death_date: "1891-05-11"
-disciplines:
-  - "Physics"
-  - "Photochemistry"
-  - "Electrochemistry"
-headline: "A French physicist who discovered the photovoltaic effect, a foundational principle of solar energy."
-quote: ""
-image: "alexandre-edmond-becquerel.png"
+name: Alexandre Edmond
+surname: Becquerel
+gender: Male
+nationality: French
+birth_date: 1820-03-24
+death_date: 1891-05-11
+disciplines: Physics, Chemistry
+headline: The teenager who accidentally discovered solar power.
+quote: "Light, that mysterious agent, the nature of which is still unknown to us."
+image: edmond_becquerel_lab.jpg
 ---
 
-Ever thank a solar panel for powering your gadgets? You can send a posthumous thank you note to Alexandre Edmond Becquerel! Born in 1820 into a family of distinguished scientists (his father, Antoine, and son, Henri, were also famous), Edmond was no slouch himself. In 1839, at just 19 years old, he made a groundbreaking discovery: the "photovoltaic effect." He observed that illuminating an electrode immersed in a conductive solution generated an electric current. Essentially, he showed us that light could be directly converted into electricity – a concept that now underpins all solar cells and clean energy dreams. Beyond that sunny revelation, he also meticulously studied luminescence, phosphorescence, and the chemical effects of light. So, next time you see a solar panel silently converting sunshine into power, remember Becquerel, the young physicist who first saw the light (and the electricity) way back when!
+Imagine being 19 years old, messing around in your dad's laboratory, and accidentally discovering how to power the future. That was Alexandre Edmond Becquerel in 1839. ☀️🔋
+
+While playing with some platinum electrodes and acid, he noticed that shining light on his setup created a tiny electric current. He had just discovered the photovoltaic effect. Did the world immediately switch to solar power? Nope. People basically went, "Huh, neat trick," and ignored it for a hundred years while they burned coal. But every single solar panel sitting on a roof today relies on the exact principle this French teenager stumbled upon in the 19th century.
+
+Edmond is the father of Henri Bacquerel, Physics Noble Prize winner with Marie and Pierre Curie for the discovery of radioactivity.   
