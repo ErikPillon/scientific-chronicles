@@ -22,17 +22,47 @@ CYAN = (6, 182, 212)          # #06b6d4
 WHITE = (255, 255, 255)
 MUTED = (203, 213, 225)
 
+# Inter is bundled (SIL OFL) so a post renders identically on macOS and on a
+# Linux server. The host-font fallbacks exist only for a stripped checkout;
+# they change the look, so the bundled files are the real answer.
+FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
 HELV = "/System/Library/Fonts/HelveticaNeue.ttc"
 AVENIR = "/System/Library/Fonts/Avenir Next.ttc"
+DEJAVU = "/usr/share/fonts/truetype/dejavu"
+
 FACES = {
-    "bold": (AVENIR, 0), "demi": (AVENIR, 2), "medium": (AVENIR, 5),
-    "regular": (AVENIR, 7), "light": (HELV, 7), "ultralight": (HELV, 5),
+    #           bundled Inter                    macOS fallback   DejaVu fallback
+    "bold":       ("InterDisplay-Bold.ttf",      (AVENIR, 0), "DejaVuSans-Bold.ttf"),
+    "demi":       ("Inter-SemiBold.ttf",         (AVENIR, 2), "DejaVuSans-Bold.ttf"),
+    "medium":     ("Inter-Medium.ttf",           (AVENIR, 5), "DejaVuSans.ttf"),
+    "regular":    ("Inter-Regular.ttf",          (AVENIR, 7), "DejaVuSans.ttf"),
+    "light":      ("Inter-Light.ttf",            (HELV, 7),   "DejaVuSans-ExtraLight.ttf"),
+    "ultralight": ("InterDisplay-ExtraLight.ttf", (HELV, 5),  "DejaVuSans-ExtraLight.ttf"),
 }
 
 
+class FontsMissing(RuntimeError):
+    pass
+
+
 def font(face: str, size: int) -> ImageFont.FreeTypeFont:
-    path, index = FACES[face]
-    return ImageFont.truetype(path, size, index=index)
+    bundled, (mac_path, mac_index), dejavu = FACES[face]
+
+    candidate = os.path.join(FONT_DIR, bundled)
+    if os.path.isfile(candidate):
+        return ImageFont.truetype(candidate, size)
+
+    if os.path.isfile(mac_path):
+        return ImageFont.truetype(mac_path, size, index=mac_index)
+
+    candidate = os.path.join(DEJAVU, dejavu)
+    if os.path.isfile(candidate):
+        return ImageFont.truetype(candidate, size)
+
+    raise FontsMissing(
+        f"no font for '{face}'. Expected {os.path.join(FONT_DIR, bundled)} — "
+        "the bundled Inter files are part of the repo; re-pull or re-deploy."
+    )
 
 
 def tracked(draw, xy, text, fnt, fill, tracking=0):

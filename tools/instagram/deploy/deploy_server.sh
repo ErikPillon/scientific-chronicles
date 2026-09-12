@@ -58,7 +58,7 @@ ssh $SSH_OPTS "$REMOTE" "
 say "Credentials"
 [ -f "$ENV_FILE" ] || { echo "  $ENV_FILE not found" >&2; exit 1; }
 ssh $SSH_OPTS "$REMOTE" 'mkdir -p ~/.config/sc-instagram && chmod 700 ~/.config/sc-instagram'
-scp $SSH_OPTS -q "$ENV_FILE" "$REMOTE:~/.config/sc-instagram/env"
+scp $SSH_OPTS -q "$ENV_FILE" "$REMOTE:.config/sc-instagram/env"
 # SCIG_REPO must point at the server's checkout, not the Mac's path.
 ssh $SSH_OPTS "$REMOTE" "
   chmod 600 ~/.config/sc-instagram/env
@@ -68,12 +68,13 @@ ssh $SSH_OPTS "$REMOTE" "
 say "Queue and portrait cache"
 ssh $SSH_OPTS "$REMOTE" 'mkdir -p ~/.local/state/sc-instagram/{media,logs}'
 if [ -f "$STATE/queue.db" ]; then
-  scp $SSH_OPTS -q "$STATE/queue.db" "$REMOTE:~/.local/state/sc-instagram/queue.db"
+  scp $SSH_OPTS -q "$STATE/queue.db" "$REMOTE:.local/state/sc-instagram/queue.db"
   echo "  queue.db copied (keeps post history and repost cooldowns)"
 fi
 if [ -d "$STATE/wikimedia" ]; then
   echo "  syncing portrait cache ($(du -sh "$STATE/wikimedia" | cut -f1)) — this is the slow part"
-  rsync -az --info=progress2 "$STATE/wikimedia/" "$REMOTE:~/.local/state/sc-instagram/wikimedia/"
+  # macOS ships openrsync, which lacks --info=progress2; keep to portable flags.
+  rsync -az "$STATE/wikimedia/" "$REMOTE:.local/state/sc-instagram/wikimedia/"
 fi
 
 say "Preflight on the server"
