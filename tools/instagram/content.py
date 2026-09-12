@@ -122,24 +122,24 @@ def _resolve_image(name) -> str | None:
     return str(candidate) if candidate.is_file() else None
 
 
-def collect(mmdd: str) -> list[Candidate]:
-    """Every corpus item whose date falls on this MM-DD."""
+def people(mmdd: str | None = None) -> list[Candidate]:
+    """Every scientist, or only those matching MM-DD. One pass over the files."""
     out: list[Candidate] = []
     repo = config.REPO
-
     for path in sorted((repo / "assets" / "scientists").glob("*.md")):
         parsed = _parse(path)
         if not parsed:
             continue
         meta, body = parsed
-        name = " ".join(
-            str(meta.get(k, "")).strip() for k in ("name", "surname")
-        ).strip()
+        name = " ".join(str(meta.get(k, "")).strip() for k in ("name", "surname")).strip()
         if not name or not body:
             continue
-        for key, occasion in (("birth_date", "Birth"), ("death_date", "Death")):
-            resolved = _mmdd(meta.get(key))
-            if not resolved or resolved[0] != mmdd:
+        birth = _mmdd(meta.get("birth_date"))
+        death = _mmdd(meta.get("death_date"))
+        for resolved, occasion in ((birth, "Birth"), (death, "Death")):
+            if not resolved:
+                continue
+            if mmdd is not None and resolved[0] != mmdd:
                 continue
             out.append(Candidate(
                 kind="scientist",
@@ -153,9 +153,19 @@ def collect(mmdd: str) -> list[Candidate]:
                 disciplines=_as_list(meta.get("disciplines")),
                 meta={"nationality": meta.get("nationality", ""),
                       "surname": str(meta.get("surname", "")).strip(),
-                      "birth_year": (_mmdd(meta.get("birth_date")) or (None, None))[1],
-                      "death_year": (_mmdd(meta.get("death_date")) or (None, None))[1]},
+                      "birth_year": (birth or (None, None))[1],
+                      "death_year": (death or (None, None))[1],
+                      "dates": [d[0] for d in (birth, death) if d]},
             ))
+            if mmdd is None:
+                break        # one entry per person when enumerating everyone
+    return out
+
+
+def collect(mmdd: str) -> list[Candidate]:
+    """Every corpus item whose date falls on this MM-DD."""
+    out: list[Candidate] = people(mmdd)
+    repo = config.REPO
 
     sources = [("event", repo / "assets" / "events")]
     if INCLUDE_OTHER_EVENTS:

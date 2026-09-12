@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import sys
 from collections import Counter
-from datetime import date
 
 import content
 import wikimedia
@@ -26,20 +25,17 @@ def main() -> int:
                         help="re-query people previously recorded as not found")
     args = parser.parse_args()
 
-    months = [args.month] if args.month else range(1, 13)
     seen: set[str] = set()
     people: list = []
-    for month in months:
-        for day in range(1, 32):
-            try:
-                date(2024, month, day)
-            except ValueError:
-                continue
-            for cand in content.collect(f"{month:02d}-{day:02d}"):
-                if cand.kind != "scientist" or cand.title in seen:
-                    continue
-                seen.add(cand.title)
-                people.append(cand)
+    for cand in content.people():
+        if cand.title in seen:
+            continue
+        if args.month and not any(
+            d.startswith(f"{args.month:02d}") for d in cand.meta.get("dates", [])
+        ):
+            continue
+        seen.add(cand.title)
+        people.append(cand)
 
     print(f"{len(people)} distinct people in scope\n")
     stats = Counter()
