@@ -137,9 +137,13 @@ through to Wikimedia instead.
 
 From Telegram: `/status` shows the queue, `/help` the basics.
 
+`./scig <command>` is shorthand for `.venv/bin/python <command>.py`:
+
 ```bash
-.venv/bin/python status.py                 # approved, waiting, published
-.venv/bin/python status.py --days 7 --all  # wider window, include declined
+./scig status                              # approved, waiting, published
+./scig status --days 7 --all               # wider window, include declined
+./scig status --columns                    # what the posts table holds
+./scig status --sql "SELECT ..."           # read-only query, printed as a table
 .venv/bin/python daily.py --dry-run        # what would post today
 .venv/bin/python daily.py                  # send today's preview now
 .venv/bin/python publish_due.py --force    # publish approved posts immediately
@@ -150,6 +154,16 @@ tail -f ~/.local/state/sc-instagram/logs/ig-approve.log
 
 State lives in `~/.local/state/sc-instagram/` — `queue.db`, `media/`,
 `wikimedia/`, `logs/`. Nothing is written into the repo.
+
+`queue.db` is a SQLite file holding one `posts` row per candidate ever
+offered. It is what makes approving a button hours later still publish the
+right thing, stops a post going out twice, and keeps a scientist from
+resurfacing for a year. Inspect it with `./scig status --sql`, or with the
+`sqlite3` CLI if you have it (`sudo apt install sqlite3` on the server).
+
+Only run the writing commands (`daily.py`, `publish_due.py`) on the host that
+owns the pipeline. Two copies with separate `queue.db` files will duplicate
+offers and confuse the repost cooldown.
 
 ## Notes
 

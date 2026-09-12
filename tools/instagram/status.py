@@ -51,14 +51,57 @@ def summarise(conn, *, days: int, include_declined: bool) -> list[str]:
     return out
 
 
+def run_sql(conn, query: str) -> int:
+    """Run a SELECT and print it as an aligned table.
+
+    Writes are refused: this is for looking, and a stray UPDATE here would
+    desynchronise the queue from what Instagram and Telegram already believe.
+    """
+    lowered = query.strip().lower()
+    if not (lowered.startswith("select") or lowered.startswith("with")):
+        print("Only SELECT / WITH queries are allowed here.", file=sys.stderr)
+        return 2
+    try:
+        rows = conn.execute(query).fetchall()
+    except Exception as exc:
+        print(f"SQL error: {exc}", file=sys.stderr)
+        return 1
+    if not rows:
+        print("(no rows)")
+        return 0
+
+    names = rows[0].keys()
+    cells = [[("" if r[n] is None else str(r[n])).replace("\n", " ")[:60] for n in names]
+             for r in rows]
+    widths = [max(len(n), *(len(row[i]) for row in cells)) for i, n in enumerate(names)]
+    print("  ".join(n.ljust(w) for n, w in zip(names, widths)))
+    print("  ".join("-" * w for w in widths))
+    for row in cells:
+        print("  ".join(c.ljust(w) for c, w in zip(row, widths)))
+    print(f"\n{len(rows)} row(s)")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--days", type=int, default=3,
                         help="days either side of today (default 3)")
     parser.add_argument("--all", action="store_true", help="include declined")
+    parser.add_argument("--sql", metavar="QUERY",
+                        help="run a read-only SELECT against the queue and print a table")
+    parser.add_argument("--columns", action="store_true",
+                        help="list the columns of the posts table")
     args = parser.parse_args()
 
     conn = store.connect()
+
+    if args.columns:
+        for row in conn.execute("PRAGMA table_info(posts)"):
+            print(f"  {row['name']:<14} {row['type']}")
+        return 0
+
+    if args.sql:
+        return run_sql(conn, args.sql)
     print(f"queue: {config.DB_PATH}")
     print(f"slots: {config.PUBLISH_AT} {config.TIMEZONE}, every "
           f"{config.PUBLISH_STAGGER_MIN} min, max {config.MAX_POSTS_PER_DAY}/day")

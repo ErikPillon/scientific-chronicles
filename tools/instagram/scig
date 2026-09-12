@@ -1,0 +1,5 @@
+#!/bin/bash
+# Convenience launcher: `scig status`, `scig status --sql "..."`, `scig daily --dry-run`.
+HERE="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "${BASH_SOURCE[0]}")")" && pwd)"
+CMD="${1:-status}"; shift 2>/dev/null || true
+exec "$HERE/.venv/bin/python" "$HERE/$CMD.py" "$@"
