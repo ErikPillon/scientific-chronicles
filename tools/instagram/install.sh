@@ -13,7 +13,7 @@ PREFIX="com.scientificchronicles"
 echo "==> Python environment"
 [ -d "$HERE/.venv" ] || python3 -m venv "$HERE/.venv"
 "$HERE/.venv/bin/pip" -q install --upgrade pip
-"$HERE/.venv/bin/pip" -q install Pillow boto3 requests PyYAML
+"$HERE/.venv/bin/pip" -q install Pillow boto3 requests PyYAML "opencv-python-headless<5"
 echo "    ok"
 
 echo "==> Config"

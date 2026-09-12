@@ -153,6 +153,7 @@ def people(mmdd: str | None = None) -> list[Candidate]:
                 disciplines=_as_list(meta.get("disciplines")),
                 meta={"nationality": meta.get("nationality", ""),
                       "surname": str(meta.get("surname", "")).strip(),
+                      "image_credit": str(meta.get("image_credit", "")).strip(),
                       "birth_year": (birth or (None, None))[1],
                       "death_year": (death or (None, None))[1],
                       "dates": [d[0] for d in (birth, death) if d]},
@@ -233,7 +234,9 @@ def resolve_image(cand: "Candidate", *, live: bool = True) -> tuple[str | None, 
     in which case render.py falls back to a generated card.
     """
     if cand.image:
-        return cand.image, ""
+        # A persisted portrait keeps its credit in frontmatter, since the
+        # caption builder can no longer ask Wikimedia who took it.
+        return cand.image, cand.meta.get("image_credit", "")
     key = portrait_key(cand)
     if not key:
         return None, ""
@@ -317,12 +320,10 @@ def build_caption(cand: Candidate, today: date) -> str:
         if years:
             head += f" ({years} years ago)"
 
-    parts = [head]
-    # The corpus body already opens with the hook, so the headline would repeat
-    # it; include the headline only when it adds something the body does not.
-    if cand.headline and cand.headline.lower() not in cand.body.lower():
-        parts.append(plain(cand.headline))
-    parts.append(plain(cand.body))
+    # The headline is rendered on the image itself, so repeating it here would
+    # show the reader the same sentence twice. The caption carries only what
+    # the picture does not: the anniversary line and the body.
+    parts = [head, plain(cand.body)]
 
     if cand.credit:
         parts.append(cand.credit)

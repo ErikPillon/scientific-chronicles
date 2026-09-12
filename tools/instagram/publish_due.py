@@ -13,6 +13,7 @@ import traceback
 from datetime import date
 from pathlib import Path
 
+import assets
 import config
 import instagram
 import r2
@@ -43,9 +44,17 @@ def publish_one(conn, post) -> None:
         store.update(conn, post_id, status="published", ig_media_id=media_id,
                      ig_permalink=permalink, published_at=store.now(),
                      error=None, meta=json.dumps(meta))
+        saved = None
+        try:
+            saved = assets.persist(post["source_path"], meta.get("asset", ""),
+                                   meta.get("credit", ""))
+        except Exception as exc:
+            print(f"asset persist failed for {post['id']}: {exc}", file=sys.stderr)
+
         telegram.notify(
             f"📣 Published: <b>{post['title']}</b>"
             + (f"\n{permalink}" if permalink else "")
+            + (f"\n🖼 saved to assets/images/{saved}" if saved else "")
         )
         print(f"published {post_id}: {post['title']} {permalink}")
 
@@ -74,18 +83,24 @@ def main() -> int:
     if not due:
         return 0
 
-    budget = config.MAX_POSTS_PER_DAY - store.published_last_24h(conn)
-    if budget <= 0:
-        print("daily post budget already used")
-        return 0
-
     remote = instagram.quota_used()
     if remote is not None and remote >= 24:
         telegram.notify("⚠️ Instagram's 25-post/24h publishing limit is nearly used. Holding.")
         return 0
 
-    for post in due[:budget]:
+    # Budget is per target day, so a staggered run of same-day posts does not
+    # starve itself the way a rolling 24h window would.
+    spent: dict[str, int] = {}
+    for post in due:
+        day = post["target_date"] or date.today().isoformat()
+        if day not in spent:
+            spent[day] = store.published_on(conn, date.fromisoformat(day))
+        if spent[day] >= config.MAX_POSTS_PER_DAY:
+            print(f"day budget for {day} already used ({spent[day]})")
+            continue
         publish_one(conn, post)
+        if store.get_post(conn, post["id"])["status"] == "published":
+            spent[day] += 1
     return 0
 
 

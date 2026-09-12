@@ -47,11 +47,21 @@ LOG_DIR = STATE_DIR / "logs"
 # How many days must pass before the same source item may be posted again.
 REPOST_COOLDOWN_DAYS = int(get("SCIG_REPOST_COOLDOWN_DAYS", "365"))
 
-# Local time of day to publish approved posts (HH:MM, 24h).
+# Local time of the first publishing slot (HH:MM, 24h).
 PUBLISH_AT = get("SCIG_PUBLISH_AT", "17:00")
 
-# Instagram allows 25 published posts per rolling 24h. Stay well under.
-MAX_POSTS_PER_DAY = int(get("SCIG_MAX_POSTS_PER_DAY", "1"))
+# Minutes between consecutive slots on the same day.
+PUBLISH_STAGGER_MIN = int(get("SCIG_PUBLISH_STAGGER_MIN", "30"))
+
+# How many posts to prepare and preview for each day.
+POSTS_PER_DAY = int(get("SCIG_POSTS_PER_DAY", "2"))
+
+# How far ahead to prepare. 1 means each morning previews tomorrow, giving a
+# full day to approve before anything is due.
+LEAD_DAYS = int(get("SCIG_LEAD_DAYS", "1"))
+
+# Hard ceiling per calendar day. Instagram allows 25 per rolling 24h.
+MAX_POSTS_PER_DAY = int(get("SCIG_MAX_POSTS_PER_DAY", str(POSTS_PER_DAY)))
 
 
 def ensure_dirs() -> None:

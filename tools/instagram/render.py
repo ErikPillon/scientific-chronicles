@@ -6,6 +6,7 @@ Two treatments, sharing one type system so the feed looks consistent:
 """
 from __future__ import annotations
 
+import os
 from datetime import date
 from pathlib import Path
 
@@ -105,19 +106,123 @@ def _rings(img: Image.Image) -> None:
 
 
 # Crop is taken mostly off the bottom: in a portrait the head sits high, and
-# the lower third of the frame is where the type goes anyway.
+# the lower third of the frame is where the type goes anyway. Used only when
+# no face is found.
 CROP_BIAS = 0.12
 
+# Type occupies roughly the bottom 40%; a face must stay clear of it.
+TEXT_TOP_FRACTION = 0.60
+# Where a detected face should sit vertically in the finished frame.
+FACE_TARGET = 0.30
+# A face filling more than this much of the source means a tight head-shot:
+# cropping only magnifies it further, so the whole frame is kept instead.
+TIGHT_FACE_FRACTION = 0.38
+# Detections smaller than this are noise, not the subject.
+MIN_FACE_FRACTION = 0.10
 
-def _cover(photo: Image.Image) -> Image.Image:
-    """Scale-and-crop to fill 1080x1350, keeping headroom for the subject."""
+# Vertical band the fit-blur photo may occupy: below the eyebrow, above the
+# title. Keeping these explicit is what stops the type colliding with it.
+FITBLUR_TOP = 132
+FITBLUR_BOTTOM = 792
+
+_detector = None
+_detector_ready = False
+
+
+def _face_detector():
+    """Haar frontal-face detector, or None if OpenCV is unavailable."""
+    global _detector, _detector_ready
+    if _detector_ready:
+        return _detector
+    _detector_ready = True
+    try:
+        import cv2
+        path = os.path.join(cv2.data.haarcascades, "haarcascade_frontalface_default.xml")
+        if os.path.isfile(path):
+            _detector = cv2.CascadeClassifier(path)
+    except Exception:
+        _detector = None
+    return _detector
+
+
+def face_box(photo: Image.Image):
+    """(x, y, w, h) of the subject's face, or None when nothing is trustworthy."""
+    detector = _face_detector()
+    if detector is None:
+        return None
+    try:
+        import cv2
+        import numpy as np
+        gray = cv2.cvtColor(np.array(photo.convert("RGB")), cv2.COLOR_RGB2GRAY)
+        gray = cv2.equalizeHist(gray)
+        found = detector.detectMultiScale(
+            gray, 1.1, 5,
+            minSize=(max(30, photo.width // 14), max(30, photo.height // 14)))
+    except Exception:
+        return None
+    if len(found) == 0:
+        return None
+    x, y, w, h = max(found, key=lambda f: int(f[2]) * int(f[3]))
+    if h < photo.height * MIN_FACE_FRACTION:
+        return None            # too small to be the portrait subject
+    return int(x), int(y), int(w), int(h)
+
+
+def _cover(photo: Image.Image, face=None) -> Image.Image:
+    """Scale-and-crop to fill 1080x1350, composing around the face when known."""
     photo = photo.convert("RGB")
     scale = max(W / photo.width, H / photo.height)
     new = (max(int(photo.width * scale + 0.5), W), max(int(photo.height * scale + 0.5), H))
-    photo = photo.resize(new, Image.LANCZOS)
-    left = (photo.width - W) // 2
-    top = min(int((photo.height - H) * CROP_BIAS), photo.height - H)
-    return photo.crop((left, top, left + W, top + H))
+    scaled = photo.resize(new, Image.LANCZOS)
+
+    max_top = scaled.height - H
+    max_left = scaled.width - W
+
+    if face:
+        fx, fy, fw, fh = (round(v * scale) for v in face)
+        # Put the face at FACE_TARGET of the frame, then make sure the chin
+        # clears the type; clamp to what the image actually allows.
+        top = fy + fh / 2 - H * FACE_TARGET
+        overlap = (fy + fh) - (top + H * TEXT_TOP_FRACTION)
+        if overlap > 0:
+            top += overlap
+        left = fx + fw / 2 - W / 2
+        top = int(max(0, min(top, max_top)))
+        left = int(max(0, min(left, max_left)))
+    else:
+        top = min(int(max_top * CROP_BIAS), max_top)
+        left = max_left // 2
+
+    return scaled.crop((left, top, left + W, top + H))
+
+
+def _fit_blur(photo: Image.Image) -> Image.Image:
+    """Show the whole photograph over a blurred fill of itself.
+
+    For a tight head-shot there is no headroom to crop into, so cropping just
+    magnifies the face and pushes the chin under the type. Keeping the frame
+    intact reads better and never truncates the subject.
+    """
+    photo = photo.convert("RGB")
+    backdrop = _cover(photo).filter(ImageFilter.GaussianBlur(52))
+    backdrop = Image.blend(backdrop, Image.new("RGB", (W, H), INK), 0.62)
+
+    # The photo lives strictly between the eyebrow and the title, so neither
+    # ever lands on top of it.
+    box_w = W - 2 * PAD
+    box_h = FITBLUR_BOTTOM - FITBLUR_TOP
+    scale = min(box_w / photo.width, box_h / photo.height)
+    size = (max(int(photo.width * scale), 1), max(int(photo.height * scale), 1))
+    front = photo.resize(size, Image.LANCZOS)
+
+    x = (W - size[0]) // 2
+    y = FITBLUR_TOP + (box_h - size[1]) // 2
+    shadow = Image.new("L", (W, H), 0)
+    ImageDraw.Draw(shadow).rectangle([x, y + 12, x + size[0], y + size[1] + 16], fill=130)
+    backdrop.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0),
+                   shadow.filter(ImageFilter.GaussianBlur(30)))
+    backdrop.paste(front, (x, y))
+    return backdrop
 
 
 def _scrim(img: Image.Image, start: float = 0.30) -> None:
@@ -170,8 +275,8 @@ def _inset(img: Image.Image, photo: Image.Image) -> None:
     img.paste(photo, (x, y), mask)
 
 
-def _load_photo(path: str) -> tuple[Image.Image, str] | None:
-    """Open a corpus image and decide which treatment it can carry."""
+def _load_photo(path: str) -> tuple[Image.Image, str, tuple | None] | None:
+    """Open an image and decide which treatment suits it."""
     try:
         with Image.open(path) as src:
             src.load()
@@ -180,9 +285,13 @@ def _load_photo(path: str) -> tuple[Image.Image, str] | None:
         return None
     if photo.width < MIN_PHOTO_WIDTH:
         return None                                  # too small; card reads better
-    if photo.height / photo.width >= PORTRAIT_RATIO:
-        return photo, "photo"        # full bleed under a scrim — the default look
-    return photo, "inset"            # too wide to crop without wrecking it
+    if photo.height / photo.width < PORTRAIT_RATIO:
+        return photo, "inset", None                  # too wide to crop safely
+
+    face = face_box(photo)
+    if face and face[3] >= photo.height * TIGHT_FACE_FRACTION:
+        return photo, "fitblur", face                # tight head-shot; do not crop
+    return photo, "photo", face
 
 
 def _eyebrow(draw, text: str, y: int) -> None:
@@ -218,10 +327,13 @@ def render(*, title: str, eyebrow: str, headline: str, year: int | None,
 
     loaded = _load_photo(photo_path) if photo_path else None
     if loaded:
-        photo, origin = loaded
+        photo, origin, face = loaded
         if origin == "photo":
-            img = _cover(photo)
+            img = _cover(photo, face)
             _scrim(img, start=0.26)
+        elif origin == "fitblur":
+            img = _fit_blur(photo)
+            _scrim(img, start=0.60)
         else:
             img = _background()
             _inset(img, photo)

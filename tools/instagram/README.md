@@ -6,12 +6,18 @@ On approval the image goes to Cloudflare R2 and publishes to Instagram at the
 configured time.
 
 ```
-daily.py ──► image ──► render ──► Telegram preview ──► [you tap Approve]
+daily.py (09:00, for TOMORROW) ──► image ──► render ──► Telegram previews
              │                                              │
-    corpus asset → Wikimedia → card          approve_bot.py marks it approved
+    corpus asset → Wikimedia → card          approve_bot.py marks each approved
                                                             │
-                                        publish_due.py ──► R2 ──► Instagram
+                            publish_due.py ──► R2 ──► Instagram ──► assets.py
+                            (on the target day, 30 min apart)   (saves + relinks)
 ```
+
+Each morning prepares **the following day**, so there is a full day to review.
+Every post is pinned to its target date and publishes on that date — approving
+late does not move it to the wrong day. `SCIG_POSTS_PER_DAY` posts are prepared
+per day, staggered by `SCIG_PUBLISH_STAGGER_MIN` from `SCIG_PUBLISH_AT`.
 
 **No language model is involved anywhere in this pipeline.** Everything is
 plain Python: Pillow for rendering, the Telegram Bot API for approval, boto3
@@ -30,6 +36,7 @@ zero.
 | `doctor.py` | Preflight — checks every credential and hop |
 | `backfill.py` | Pre-fetch Wikimedia portraits for the whole corpus |
 | `contact_sheet.py` | Review sheet of the corpus image pool |
+| `assets.py` | Saves a published portrait into the repo and relinks the markdown |
 | `wikimedia.py` | Portrait lookup, identity check, licence filter, cache |
 | `content.py` | Reads the corpus, ranks candidates, builds captions |
 | `render.py` | The three image treatments |
@@ -80,11 +87,20 @@ from before that change, reclaim the difference with:
 
 Three treatments, in order of preference:
 
-1. **photo** — full bleed under a scrim, type over the bottom. Anything with
-   h/w ≥ 0.95 and ≥ 700px wide. This is the default look.
-2. **inset** — too wide to crop without wrecking it, so it is letterboxed in a
-   rounded panel on the ink background.
-3. **card** — no usable image: typographic card with a ghosted year.
+1. **photo** — full bleed under a scrim, type over the bottom. The default.
+   A face is located first (OpenCV Haar cascade) and the crop is composed so
+   the face sits ~30% down and the chin clears the type. Detections under 10%
+   of frame height are treated as noise and ignored.
+2. **fitblur** — when the face fills more than 38% of the source, it is a tight
+   head-shot with no headroom: cropping only magnifies it and pushes the chin
+   under the title. The whole frame is kept instead, over a blurred, darkened
+   fill of itself, in a band that cannot collide with the eyebrow or title.
+3. **inset** — too wide to crop without wrecking it: letterboxed in a rounded
+   panel on the ink background.
+4. **card** — no usable image: typographic card with a ghosted year.
+
+The headline is rendered on the image, so the caption never repeats it — it
+carries only the anniversary line, the body, the credit and hashtags.
 
 Sources are tried in order: corpus asset in `assets/images/`, then a Wikimedia
 portrait, then the card.

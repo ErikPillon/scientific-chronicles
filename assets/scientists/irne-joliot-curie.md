@@ -11,7 +11,8 @@ disciplines:
   - "Chemistry"
 headline: "A Nobel laureate in Chemistry, famous for discovering artificial radioactivity with her husband Frédéric Joliot-Curie."
 quote: ""
-image: "irne-joliot-curie.png"
+image: "irne-joliot-curie.jpg"
+image_credit: "Photo: Nobel Foundation via Wikimedia Commons"
 ---
 
 Talk about a scientific power couple! Irène Joliot-Curie, daughter of the legendary Marie and Pierre Curie, didn't just rest on her family's laurels. She and her equally brilliant husband, Frédéric Joliot-Curie, made their own groundbreaking discovery: artificial radioactivity. They basically figured out how to take stable elements and make them radioactive by bombarding them with alpha particles, opening up a whole new world for medicine and research. Their work earned them the Nobel Prize in Chemistry in 1935, making Irène the second woman ever to win a science Nobel (after her mom!). She continued her research despite health challenges, contributing significantly to nuclear physics and serving in various scientific and political roles. A true pioneer who carried on a formidable scientific legacy with her own unique sparkle.

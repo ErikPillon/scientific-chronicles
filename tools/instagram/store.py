@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS posts (
     ig_permalink  TEXT,
     error         TEXT,
     published_at  TEXT,
+    target_date   TEXT,
     meta          TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_posts_status ON posts(status);
@@ -47,7 +48,19 @@ def connect() -> sqlite3.Connection:
     conn = sqlite3.connect(config.DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    _migrate(conn)
     return conn
+
+
+def _migrate(conn: sqlite3.Connection) -> None:
+    """Add columns introduced after a database was first created."""
+    have = {row["name"] for row in conn.execute("PRAGMA table_info(posts)")}
+    if "target_date" not in have:
+        conn.execute("ALTER TABLE posts ADD COLUMN target_date TEXT")
+        # Existing rows were same-day by definition.
+        conn.execute("UPDATE posts SET target_date = substr(created_at, 1, 10) "
+                     "WHERE target_date IS NULL")
+        conn.commit()
 
 
 def recently_posted(conn: sqlite3.Connection) -> set[str]:
@@ -116,3 +129,26 @@ def published_last_24h(conn: sqlite3.Connection) -> int:
         (cutoff,),
     ).fetchone()
     return int(row["n"])
+
+
+def published_on(conn: sqlite3.Connection, day) -> int:
+    """Posts published for a given target date.
+
+    Counting by target date rather than a rolling window keeps a staggered
+    run of same-day posts from starving itself against the daily ceiling.
+    """
+    row = conn.execute(
+        "SELECT COUNT(*) AS n FROM posts WHERE status = 'published' AND target_date = ?",
+        (day.isoformat(),),
+    ).fetchone()
+    return int(row["n"])
+
+
+def queued_for(conn: sqlite3.Connection, day) -> list[sqlite3.Row]:
+    """Everything already prepared for a target date, in slot order."""
+    return conn.execute(
+        """SELECT * FROM posts
+            WHERE target_date = ? AND status IN ('pending', 'approved', 'published')
+            ORDER BY id""",
+        (day.isoformat(),),
+    ).fetchall()

@@ -1,13 +1,19 @@
 #!/usr/bin/env python
-"""Daily job: pick today's best item, render it, and ask for approval."""
+"""Daily job: prepare the next day's posts and send them for approval.
+
+Runs each morning for the day after, so there is a full day to approve
+before anything is due. Each post is pinned to its own target date and to a
+staggered slot within it.
+"""
 from __future__ import annotations
 
 import argparse
 import sys
 import traceback
-from datetime import date
+from datetime import date, timedelta
 
 import config
+import content
 import pipeline
 import store
 import telegram
@@ -15,57 +21,63 @@ import telegram
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--date", help="override the day, as YYYY-MM-DD")
+    parser.add_argument("--date", help="target day, as YYYY-MM-DD")
+    parser.add_argument("--days-ahead", type=int, default=config.LEAD_DAYS,
+                        help=f"days ahead to prepare (default {config.LEAD_DAYS})")
+    parser.add_argument("--count", type=int, default=config.POSTS_PER_DAY,
+                        help=f"posts to prepare (default {config.POSTS_PER_DAY})")
     parser.add_argument("--dry-run", action="store_true",
-                        help="render and print, but do not queue or send")
+                        help="print what would be prepared, queue nothing")
     parser.add_argument("--again", action="store_true",
-                        help="queue another post even if today already has one")
+                        help="prepare more even if the day already has posts")
     args = parser.parse_args()
 
-    today = date.fromisoformat(args.date) if args.date else date.today()
+    target = (date.fromisoformat(args.date) if args.date
+              else date.today() + timedelta(days=args.days_ahead))
     conn = store.connect()
 
-    # launchd fires a missed calendar job when the Mac wakes, so this can run
-    # more than once a day. One post per day, unless --again is passed.
-    if not args.again:
-        existing = conn.execute(
-            """SELECT id, title, status FROM posts
-                WHERE mmdd = ? AND created_at >= ?
-                  AND status IN ('pending', 'approved', 'published')
-                ORDER BY id DESC LIMIT 1""",
-            (today.strftime("%m-%d"), today.isoformat()),
-        ).fetchone()
-        if existing:
-            print(f"already handled today: #{existing['id']} "
-                  f"{existing['title']} ({existing['status']})")
-            return 0
-
-    candidates = pipeline.candidates_for(conn, today)
-
-    if not candidates:
-        telegram.notify(f"📭 No unposted candidates for {today:%d %b}.")
-        print(f"no candidates for {today}")
+    existing = store.queued_for(conn, target)
+    if existing and not args.again:
+        summary = ", ".join(f"#{r['id']} {r['title']} ({r['status']})" for r in existing)
+        print(f"{target} already prepared: {summary}")
         return 0
 
-    pool = [c.source_path for c in candidates][:8]
-    best = candidates[0]
+    candidates = pipeline.candidates_for(conn, target)
+    if not candidates:
+        telegram.notify(f"📭 No unposted candidates for {target:%d %b}.")
+        print(f"no candidates for {target}")
+        return 0
+
+    wanted = max(1, args.count)
+    pool = [c.source_path for c in candidates][: wanted + 6]
+    chosen = candidates[:wanted]
+    first_slot = len(existing)
 
     if args.dry_run:
-        import content as content_mod
-        path, credit = content_mod.resolve_image(best)
-        source = ("corpus asset" if best.image else
-                  "wikimedia" if path else "none — will render a card")
-        print(f"{len(candidates)} candidates; best = {best.title} "
-              f"(score {best.score:.1f}, image: {source})")
-        if credit:
-            print(f"credit: {credit}")
-        best.credit = credit
-        print("-" * 60)
-        print(content_mod.build_caption(best, today))
+        print(f"target {target} — {len(candidates)} candidates, preparing {len(chosen)}")
+        for offset, cand in enumerate(chosen):
+            slot = first_slot + offset
+            path, credit = content.resolve_image(cand, live=False)
+            source = ("corpus asset" if cand.image else
+                      "wikimedia" if path else "none — card")
+            when = pipeline.local_label(pipeline.scheduled_at(target, slot))
+            print(f"  slot {slot + 1}: {cand.title}  [{source}]  publishes {when}")
         return 0
 
-    post_id = pipeline.build_and_queue(conn, best, today, rank=0, pool=pool)
-    print(f"queued post {post_id}: {best.title}")
+    queued = []
+    for offset, cand in enumerate(chosen):
+        slot = first_slot + offset
+        post_id = pipeline.build_and_queue(conn, cand, target, rank=offset,
+                                           pool=pool, slot=slot)
+        queued.append(f"#{post_id} {cand.title}")
+        print(f"queued slot {slot + 1}: {cand.title}")
+
+    telegram.notify(
+        f"🗓 <b>{target:%A %d %B}</b> — {len(queued)} post(s) ready for review.\n"
+        + "\n".join(queued)
+        + f"\n\nApprove each one above. They publish on {target:%d %b}, "
+          f"{config.PUBLISH_STAGGER_MIN} min apart from {config.PUBLISH_AT}."
+    )
     return 0
 
 
