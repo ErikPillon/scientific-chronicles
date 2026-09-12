@@ -30,6 +30,9 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, today: da
                     *, rank: int, pool: list[str]) -> int:
     """Render the image, queue the post, and send the approval preview."""
     config.ensure_dirs()
+    # Resolve the image first: a Wikimedia credit has to reach the caption.
+    photo_path, credit = content.resolve_image(cand)
+    cand.credit = credit
     caption = content.build_caption(cand, today)
     slug = Path(cand.source_path).stem[:48]
     image_path = config.MEDIA_DIR / f"{today.isoformat()}-{rank:02d}-{slug}.jpg"
@@ -39,7 +42,7 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, today: da
         eyebrow=render.eyebrow_for(cand.kind, cand.occasion, today),
         headline=cand.headline,
         year=cand.year,
-        photo_path=cand.image,
+        photo_path=photo_path,
         out_path=image_path,
     )
 
@@ -57,7 +60,8 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, today: da
         tg_chat_id=telegram.chat_id(),
         scheduled_for=when,
         meta={"rank": rank, "pool": pool, "score": round(cand.score, 1),
-              "asset": cand.image or "", "day": today.isoformat()},
+              "asset": photo_path or "", "credit": credit,
+              "day": today.isoformat()},
     )
 
     message = telegram.send_preview(

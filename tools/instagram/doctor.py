@@ -80,6 +80,21 @@ def main() -> int:
         return "separate from openclaw's bot"
     check("token is not openclaw's", distinct)
 
+    print("\nWikimedia")
+    def wikimedia_reachable():
+        import content, wikimedia
+        if not content.WIKIMEDIA_ENABLED:
+            return "disabled (SCIG_WIKIMEDIA=0)"
+        cached = len(list(wikimedia.CACHE.glob("*.json"))) if wikimedia.CACHE.is_dir() else 0
+        hits = sum(1 for f in wikimedia.CACHE.glob("*.json")
+                   if '"ok": true' in f.read_text()) if wikimedia.CACHE.is_dir() else 0
+        found = wikimedia._lookup("Marie Curie", "Curie", 1867, 1934)
+        if not found:
+            raise RuntimeError("lookup for a known page returned nothing")
+        return (f"reachable; licences {sorted(wikimedia.ALLOWED)}; "
+                f"cache {hits} portraits / {cached} looked up")
+    check("api + cache", wikimedia_reachable)
+
     print("\nCloudflare R2")
     def r2_rw():
         import r2, requests

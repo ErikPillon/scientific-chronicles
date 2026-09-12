@@ -104,14 +104,19 @@ def _rings(img: Image.Image) -> None:
     img.paste(Image.alpha_composite(img.convert("RGBA"), layer).convert("RGB"), (0, 0))
 
 
+# Crop is taken mostly off the bottom: in a portrait the head sits high, and
+# the lower third of the frame is where the type goes anyway.
+CROP_BIAS = 0.12
+
+
 def _cover(photo: Image.Image) -> Image.Image:
-    """Scale-and-crop to fill 1080x1350, biased to the upper third for faces."""
+    """Scale-and-crop to fill 1080x1350, keeping headroom for the subject."""
     photo = photo.convert("RGB")
     scale = max(W / photo.width, H / photo.height)
     new = (max(int(photo.width * scale + 0.5), W), max(int(photo.height * scale + 0.5), H))
     photo = photo.resize(new, Image.LANCZOS)
     left = (photo.width - W) // 2
-    top = min((photo.height - H) // 3, photo.height - H)
+    top = min(int((photo.height - H) * CROP_BIAS), photo.height - H)
     return photo.crop((left, top, left + W, top + H))
 
 
@@ -133,7 +138,7 @@ def _scrim(img: Image.Image, start: float = 0.30) -> None:
 # A photo must be big enough that upscaling to feed width still looks clean,
 # and portrait enough that a 4:5 crop does not decapitate it.
 MIN_PHOTO_WIDTH = 700
-PORTRAIT_RATIO = 1.15
+PORTRAIT_RATIO = 0.95
 
 INSET_TOP = 150
 INSET_MAX_H = 600
@@ -176,8 +181,8 @@ def _load_photo(path: str) -> tuple[Image.Image, str] | None:
     if photo.width < MIN_PHOTO_WIDTH:
         return None                                  # too small; card reads better
     if photo.height / photo.width >= PORTRAIT_RATIO:
-        return photo, "photo"
-    return photo, "inset"
+        return photo, "photo"        # full bleed under a scrim — the default look
+    return photo, "inset"            # too wide to crop without wrecking it
 
 
 def _eyebrow(draw, text: str, y: int) -> None:

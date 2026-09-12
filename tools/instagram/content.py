@@ -37,6 +37,7 @@ class Candidate:
     year: int | None
     occasion: str             # "Birth" | "Death" | "" for events
     disciplines: list[str] = field(default_factory=list)
+    credit: str = ""
     score: float = 0.0
     meta: dict = field(default_factory=dict)
 
@@ -75,15 +76,14 @@ def _as_list(value) -> list[str]:
     return []
 
 
-# Corpus images were gathered for a personal website and their provenance is
-# mixed: many are screenshots of other people's social posts or watermarked
-# third-party graphics. Republishing those to a public Instagram account is a
-# different bar, so the default policy is deny-by-default.
+# Corpus images come from an earlier project of the author's. A few carry
+# third-party watermarks from wherever they were originally collected, so the
+# blocklist stays available; `all` is the default.
 #
-#   allowlist (default) - only filenames listed in the allowlist file are used
-#   blocklist           - everything except filenames in the blocklist file
-#   all                 - every corpus image (not recommended)
-IMAGE_POLICY = config.get("SCIG_IMAGE_POLICY", "allowlist").strip().lower()
+#   all (default) - every corpus image
+#   blocklist     - everything except filenames in the blocklist file
+#   allowlist     - only filenames listed in the allowlist file
+IMAGE_POLICY = config.get("SCIG_IMAGE_POLICY", "all").strip().lower()
 ALLOWLIST_FILE = Path(config.get(
     "SCIG_IMAGE_ALLOWLIST", "~/.config/sc-instagram/image-allowlist.txt")).expanduser()
 BLOCKLIST_FILE = Path(config.get(
@@ -151,7 +151,10 @@ def collect(mmdd: str) -> list[Candidate]:
                 year=resolved[1],
                 occasion=occasion,
                 disciplines=_as_list(meta.get("disciplines")),
-                meta={"nationality": meta.get("nationality", "")},
+                meta={"nationality": meta.get("nationality", ""),
+                      "surname": str(meta.get("surname", "")).strip(),
+                      "birth_year": (_mmdd(meta.get("birth_date")) or (None, None))[1],
+                      "death_year": (_mmdd(meta.get("death_date")) or (None, None))[1]},
             ))
 
     sources = [("event", repo / "assets" / "events")]
@@ -198,6 +201,54 @@ def plain(text: str) -> str:
     return text.strip()
 
 
+WIKIMEDIA_ENABLED = config.get("SCIG_WIKIMEDIA", "1") == "1"
+
+
+def portrait_key(cand: "Candidate") -> str | None:
+    """Cache key for a Wikimedia lookup, or None if one should not be tried.
+
+    Only people are looked up. An event title does not reliably map to a
+    correct image, and a wrong picture is worse than a generated card.
+    """
+    if not WIKIMEDIA_ENABLED or cand.kind != "scientist":
+        return None
+    import wikimedia
+    return wikimedia.slug(cand.title)
+
+
+def resolve_image(cand: "Candidate", *, live: bool = True) -> tuple[str | None, str]:
+    """Best available image for a candidate, as (path, credit).
+
+    Corpus asset first, then a verified Wikimedia portrait, then nothing —
+    in which case render.py falls back to a generated card.
+    """
+    if cand.image:
+        return cand.image, ""
+    key = portrait_key(cand)
+    if not key:
+        return None, ""
+    import wikimedia
+    hit = wikimedia.cached(key)
+    if isinstance(hit, wikimedia.Portrait):
+        return hit.path, hit.credit
+    if hit == "miss" or not live:
+        return None, ""
+    birth = cand.meta.get("birth_year")
+    death = cand.meta.get("death_year")
+    found = wikimedia.fetch(cand.title, surname=cand.meta.get("surname", ""),
+                            birth_year=birth, death_year=death)
+    return (found.path, found.credit) if found else (None, "")
+
+
+def has_cached_portrait(cand: "Candidate") -> bool:
+    """Disk-only check, used for ranking so scoring never hits the network."""
+    key = portrait_key(cand)
+    if not key:
+        return False
+    import wikimedia
+    return isinstance(wikimedia.cached(key), wikimedia.Portrait)
+
+
 def anniversary(cand: Candidate, today: date) -> int | None:
     """Years elapsed, when the item has a usable year in the past."""
     if not cand.year or cand.year < 100 or cand.year >= today.year:
@@ -207,7 +258,7 @@ def anniversary(cand: Candidate, today: date) -> int | None:
 
 def score(cand: Candidate, today: date) -> float:
     points = 0.0
-    if cand.image:
+    if cand.image or has_cached_portrait(cand):
         points += 40                       # a real photograph beats a rendered card
     points += min(len(cand.body), 1200) / 100.0
     if cand.headline:
@@ -263,6 +314,8 @@ def build_caption(cand: Candidate, today: date) -> str:
         parts.append(plain(cand.headline))
     parts.append(plain(cand.body))
 
+    if cand.credit:
+        parts.append(cand.credit)
     tags = " ".join(hashtags(cand))
     caption = "\n\n".join(parts)
     budget = MAX_CAPTION - len(tags) - 2

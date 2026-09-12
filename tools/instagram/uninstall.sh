@@ -1,10 +1,10 @@
 #!/bin/bash
-# Remove the scheduled jobs and the approval service. Leaves data and config.
+# Remove the launchd jobs. Leaves config, state and cached portraits.
 set -uo pipefail
-LABEL="com.scientificchronicles.ig-approve"
-launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null && echo "stopped $LABEL"
-rm -f "$HOME/Library/LaunchAgents/$LABEL.plist"
-for job in ig-daily-pick ig-publish-due ig-token-refresh; do
-  openclaw cron rm "$job" >/dev/null 2>&1 && echo "removed automation $job"
+PREFIX="com.scientificchronicles"
+for suffix in ig-approve ig-daily ig-publish ig-token; do
+  label="$PREFIX.$suffix"
+  launchctl bootout "gui/$(id -u)/$label" 2>/dev/null && echo "stopped $label"
+  rm -f "$HOME/Library/LaunchAgents/$label.plist"
 done
-echo "Config at ~/.config/sc-instagram/env and state at ~/.local/state/sc-instagram were kept."
+echo "Config (~/.config/sc-instagram/env) and state (~/.local/state/sc-instagram) kept."
