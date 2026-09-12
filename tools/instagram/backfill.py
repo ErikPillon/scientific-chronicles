@@ -23,7 +23,22 @@ def main() -> int:
                         help="re-query people already cached")
     parser.add_argument("--retry-misses", action="store_true",
                         help="re-query people previously recorded as not found")
+    parser.add_argument("--compact", action="store_true",
+                        help="re-encode the existing cache and exit")
     args = parser.parse_args()
+
+    if args.compact:
+        files = sorted(wikimedia.CACHE.glob("*.jpg"))
+        before = sum(f.stat().st_size for f in files)
+        saved = 0
+        for index, path in enumerate(files, 1):
+            saved += wikimedia.compact(path)
+            if index % 200 == 0:
+                print(f"  {index}/{len(files)}  {saved/1e6:.0f} MB reclaimed", flush=True)
+        after = sum(f.stat().st_size for f in files)
+        print(f"\ncache {before/1e6:.0f} MB -> {after/1e6:.0f} MB "
+              f"({(before-after)/1e6:.0f} MB reclaimed, {len(files)} files)")
+        return 0
 
     seen: set[str] = set()
     people: list = []

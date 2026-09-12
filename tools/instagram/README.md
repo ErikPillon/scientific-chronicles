@@ -65,7 +65,16 @@ Then warm the portrait cache — one pass over ~2000 people, a few minutes:
 ```
 
 Ranking uses the cache, so backfilling also makes the picker prefer people who
-actually have a portrait.
+actually have a portrait. A full backfill resolves about two thirds of the
+2062 people and leaves every day of the year with at least one photo-backed
+candidate.
+
+Downloads are re-encoded to JPEG at 1400px on the way in. If you have a cache
+from before that change, reclaim the difference with:
+
+```bash
+.venv/bin/python backfill.py --compact
+```
 
 ## Images
 

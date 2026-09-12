@@ -26,10 +26,17 @@ import requests
 
 import config
 
+from PIL import Image
+
 WIKI_API = "https://en.wikipedia.org/w/api.php"
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
-THUMB_WIDTH = 1600
+THUMB_WIDTH = 1400
 MIN_WIDTH = 500
+
+# The renderer needs 1080x1350. Anything wider than this is dead weight on
+# disk, so downloads are re-encoded to JPEG once and kept at a usable size.
+STORE_MAX_WIDTH = 1400
+STORE_QUALITY = 88
 REQUEST_PAUSE = 0.35
 
 CACHE = config.STATE_DIR / "wikimedia"
@@ -166,6 +173,29 @@ def _file_info(file_name: str) -> dict | None:
     }
 
 
+def compact(path: Path) -> int:
+    """Normalise a cached image to JPEG at a sane size. Returns bytes saved.
+
+    Commons serves PNG and TIFF originals that run to several megabytes; the
+    renderer only ever needs 1080x1350, so keeping them whole wastes disk.
+    """
+    before = path.stat().st_size
+    try:
+        with Image.open(path) as src:
+            src.load()
+            image = src.convert("RGB")
+            if image.width > STORE_MAX_WIDTH:
+                height = round(image.height * STORE_MAX_WIDTH / image.width)
+                image = image.resize((STORE_MAX_WIDTH, height), Image.LANCZOS)
+            if src.format == "JPEG" and before <= 400_000 and image.width <= STORE_MAX_WIDTH:
+                return 0                      # already small and already JPEG
+            image.save(path, "JPEG", quality=STORE_QUALITY, optimize=True,
+                       progressive=True)
+    except Exception:
+        return 0
+    return max(before - path.stat().st_size, 0)
+
+
 def _cache_paths(key: str) -> tuple[Path, Path]:
     CACHE.mkdir(parents=True, exist_ok=True)
     return CACHE / f"{key}.jpg", CACHE / f"{key}.json"
@@ -224,6 +254,7 @@ def fetch(name: str, *, surname: str = "", birth_year: int | None = None,
         response = session().get(info["url"], timeout=60)
         response.raise_for_status()
         image_path.write_bytes(response.content)
+        compact(image_path)
         time.sleep(REQUEST_PAUSE)
 
         artist = info["artist"] or "Unknown"
