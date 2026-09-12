@@ -134,6 +134,12 @@ State lives in `~/.local/state/sc-instagram/` — `queue.db`, `media/`,
 * A calendar job missed while the Mac sleeps fires on wake. `daily.py` will
   not queue a second post for a day that already has one; use `--again` to
   override.
+* There are two Instagram APIs and they are not interchangeable. A token
+  starting `IGAA` is **Instagram Login** and must go to `graph.instagram.com`;
+  one starting `EAA` is **Facebook Login** and must go to `graph.facebook.com`.
+  Crossing them fails with an opaque "Cannot parse access token"; `doctor.py`
+  names this case directly. Instagram Login refreshes without an app secret,
+  so `SCIG_META_APP_ID`/`SECRET` are only needed for the Facebook flow.
 * The approval bot needs its own Telegram token. If you also run openclaw,
   two long-poll consumers on one token steal each other's updates —
   `doctor.py` checks for exactly this.

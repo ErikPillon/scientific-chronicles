@@ -61,8 +61,48 @@ def banner(title: str, *lines: str) -> None:
         print(f"  {DIM}{line}{RESET}")
 
 
+class Invalid(ValueError):
+    """Input is the wrong shape — say what was expected and where to find it."""
+
+
+def v_chat_id(value: str) -> str:
+    if not value.lstrip("-").isdigit():
+        raise Invalid("must be numeric — the id, not your @username")
+    if len(value.lstrip("-")) < 6:
+        raise Invalid(f"{value!r} is too short for a Telegram id (they run ~9-10 digits)")
+    return value
+
+
+def v_account_id(value: str) -> str:
+    if value.startswith("http"):
+        match = re.search(r"dash\.cloudflare\.com/([0-9a-f]{32})", value)
+        if match:
+            raise Invalid(f"that is a dashboard URL — the account id inside it "
+                          f"is {match.group(1)}")
+        raise Invalid("that is a URL, not the account id. R2 sidebar > Account ID, "
+                      "32 hex characters")
+    if not re.fullmatch(r"[0-9a-f]{32}", value):
+        raise Invalid("expected 32 hex characters (R2 sidebar > Account ID)")
+    return value
+
+
+def v_public_base(value: str) -> str:
+    if "dash.cloudflare.com" in value:
+        raise Invalid("that is the dashboard page, not the public bucket URL. "
+                      "Bucket > Settings > Public access, or your custom domain")
+    if not value.startswith("https://"):
+        raise Invalid("must start with https://")
+    return value.rstrip("/")
+
+
+def v_ig_user_id(value: str) -> str:
+    if not value.isdigit():
+        raise Invalid(f"{value!r} looks like a handle — this needs the numeric id")
+    return value
+
+
 def ask(key: str, prompt: str, values: dict[str, str], *,
-        secret: bool = False, default: str = "") -> str:
+        secret: bool = False, default: str = "", validate=None) -> str:
     current = values.get(key, "") or default
     if current:
         shown = f"{current[:6]}…{current[-4:]}" if secret and len(current) > 14 else current
@@ -72,13 +112,20 @@ def ask(key: str, prompt: str, values: dict[str, str], *,
     while True:
         raw = (getpass.getpass(f"  {prompt}{suffix}: ") if secret
                else input(f"  {prompt}{suffix}: ")).strip()
-        if raw:
-            values[key] = raw
-            return raw
-        if current:
-            values[key] = current
-            return current
-        print(f"  {RED}required{RESET}")
+        candidate = raw or current
+        if not candidate:
+            print(f"  {RED}required{RESET}")
+            continue
+        if validate:
+            try:
+                candidate = validate(candidate)
+            except Invalid as exc:
+                print(f"  {RED}{exc}{RESET}")
+                if not raw:
+                    current = ""          # stored value is bad; force a new one
+                continue
+        values[key] = candidate
+        return candidate
 
 
 def verify(label: str, fn) -> bool:
@@ -138,10 +185,25 @@ def main() -> int:
                "token makes the two steal each other's updates.")
         ask("SCIG_TELEGRAM_BOT_TOKEN", "bot token", values, secret=True)
         print(f"  {DIM}Now send any message to your new bot so it can see your chat.{RESET}")
-        ask("SCIG_TELEGRAM_CHAT_ID", "your numeric chat id", values,
-            default=values.get("SCIG_TELEGRAM_CHAT_ID", ""))
         apply(values)
+        import telegram as tg
 
+        # Offer to read the id straight off a message rather than make them hunt.
+        detected = ""
+        try:
+            for update in tg.call("getUpdates", limit=10):
+                chat = (update.get("message") or update.get("callback_query", {})
+                        .get("message") or {}).get("chat") or {}
+                if chat.get("id"):
+                    detected = str(chat["id"])
+        except Exception:
+            pass
+        if detected:
+            print(f"  {GREEN}detected chat id {detected}{RESET} from a recent message")
+        ask("SCIG_TELEGRAM_CHAT_ID", "your numeric chat id", values,
+            default=detected or values.get("SCIG_TELEGRAM_CHAT_ID", ""),
+            validate=v_chat_id)
+        apply(values)
         import telegram as tg
         ok = verify("bot token", lambda: "@" + tg.call("getMe")["username"])
         if not ok:
@@ -161,12 +223,14 @@ def main() -> int:
                "Manage API tokens > Create token, Object Read & Write on one bucket.",
                "The public URL must be reachable — Instagram fetches the image itself.",
                "Prefer a custom domain; r2.dev is rate-limited by Cloudflare.")
-        ask("SCIG_R2_ACCOUNT_ID", "account id", values)
+        ask("SCIG_R2_ACCOUNT_ID", "account id (32 hex chars)", values,
+            validate=v_account_id)
         ask("SCIG_R2_ACCESS_KEY_ID", "access key id", values, secret=True)
         ask("SCIG_R2_SECRET_ACCESS_KEY", "secret access key", values, secret=True)
         ask("SCIG_R2_BUCKET", "bucket name", values,
             default=values.get("SCIG_R2_BUCKET", "scientific-chronicles-ig"))
-        ask("SCIG_R2_PUBLIC_BASE", "public base URL (https://…)", values)
+        ask("SCIG_R2_PUBLIC_BASE", "public base URL (https://…)", values,
+            validate=v_public_base)
         apply(values)
 
         import r2, requests, config as cfg
@@ -196,11 +260,40 @@ def main() -> int:
                "Call /me/accounts, then /{page-id}?fields=instagram_business_account",
                "to get the Instagram user id. Exchange for a long-lived token.",
                "App id and secret (Settings > Basic) let it auto-refresh.")
-        ask("SCIG_IG_USER_ID", "instagram business user id", values)
-        ask("SCIG_IG_ACCESS_TOKEN", "long-lived access token", values, secret=True)
-        ask("SCIG_META_APP_ID", "meta app id", values)
-        ask("SCIG_META_APP_SECRET", "meta app secret", values, secret=True)
-        values.setdefault("SCIG_IG_API_BASE", "https://graph.facebook.com/v23.0")
+        token = ask("SCIG_IG_ACCESS_TOKEN", "long-lived access token", values, secret=True)
+
+        # Token prefix says which API this is. Sending an Instagram-Login token
+        # to graph.facebook.com fails with an unhelpful "cannot parse" error.
+        instagram_login = token.startswith("IG")
+        values["SCIG_IG_API_BASE"] = (
+            "https://graph.instagram.com/v23.0" if instagram_login
+            else "https://graph.facebook.com/v23.0")
+        print(f"  {GREEN}token is {'Instagram Login' if instagram_login else 'Facebook Login'}"
+              f"{RESET} — using {values['SCIG_IG_API_BASE']}")
+        apply(values)
+        import requests as _rq
+
+        # Ask the API for the numeric id rather than making them find it.
+        detected = ""
+        try:
+            if instagram_login:
+                data = _rq.get("https://graph.instagram.com/v23.0/me",
+                               params={"fields": "user_id,username",
+                                       "access_token": token}, timeout=30).json()
+                detected = str(data.get("user_id", "") or "")
+                if detected:
+                    print(f"  {GREEN}detected @{data.get('username')} "
+                          f"({detected}){RESET}")
+        except Exception:
+            pass
+        ask("SCIG_IG_USER_ID", "instagram business user id (numeric)", values,
+            default=detected or values.get("SCIG_IG_USER_ID", ""),
+            validate=v_ig_user_id)
+
+        if not instagram_login:
+            # Only the Facebook flow needs an app id/secret to refresh a token.
+            ask("SCIG_META_APP_ID", "meta app id", values)
+            ask("SCIG_META_APP_SECRET", "meta app secret", values, secret=True)
         apply(values)
 
         import instagram as ig

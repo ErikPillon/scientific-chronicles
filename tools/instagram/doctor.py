@@ -116,6 +116,22 @@ def main() -> int:
     check("bucket read/write + public URL", r2_rw)
 
     print("\nInstagram")
+    def flavour():
+        """Meta returns an opaque 'cannot parse' error for this mismatch."""
+        import instagram as ig
+        token = config.require("SCIG_IG_ACCESS_TOKEN")
+        base = ig.base()
+        is_ig_login = token.startswith("IG")
+        wants = "graph.instagram.com" if is_ig_login else "graph.facebook.com"
+        kind = "Instagram Login" if is_ig_login else "Facebook Login"
+        if wants not in base:
+            raise RuntimeError(
+                f"token is a {kind} token ({token[:4]}…) but SCIG_IG_API_BASE points at "
+                f"{base.split('//')[-1].split('/')[0]}. Set SCIG_IG_API_BASE="
+                f"https://{wants}/v23.0, or mint a token from the other flow.")
+        return f"{kind} token against {wants}"
+    check("token matches API base", flavour)
+
     def account():
         import instagram
         data = instagram._request("GET", instagram._user_id(),
