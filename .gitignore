@@ -16,3 +16,7 @@ content/english/recurrence-days/
 jsconfig.json
 go.sum
 yarn.lock
+
+# Instagram pipeline
+tools/instagram/.venv
+tools/instagram/image-review.jpg
