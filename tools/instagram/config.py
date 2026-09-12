@@ -81,3 +81,19 @@ MAX_POSTS_PER_DAY = int(get("SCIG_MAX_POSTS_PER_DAY", "6"))
 def ensure_dirs() -> None:
     for directory in (STATE_DIR, MEDIA_DIR, LOG_DIR):
         directory.mkdir(parents=True, exist_ok=True)
+
+
+# Some hosts advertise IPv6 routes that black-hole. Every outbound call then
+# waits for the v6 attempt to time out before falling back, which turned a
+# 0.1s R2 upload into 120s. Filtering resolution to IPv4 sidesteps it without
+# root; fixing the host's routing is the real cure.
+if get("SCIG_FORCE_IPV4", "0") == "1":
+    import socket as _socket
+
+    _real_getaddrinfo = _socket.getaddrinfo
+
+    def _ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
+        results = _real_getaddrinfo(host, port, _socket.AF_INET, type, proto, flags)
+        return results or _real_getaddrinfo(host, port, family, type, proto, flags)
+
+    _socket.getaddrinfo = _ipv4_only
