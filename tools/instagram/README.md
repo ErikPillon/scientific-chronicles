@@ -22,6 +22,7 @@ zero.
 
 | File | Role |
 |---|---|
+| `setup_credentials.py` | Interactive, verified credential entry |
 | `daily.py` | Pick today's item, render, send for approval |
 | `approve_bot.py` | Long-running service; handles the inline-keyboard taps |
 | `publish_due.py` | Uploads to R2 and publishes when due |
@@ -37,11 +38,17 @@ zero.
 ## Setup
 
 ```bash
+tools/instagram/.venv/bin/python tools/instagram/setup_credentials.py
 tools/instagram/install.sh
 ```
 
-First run copies `env.example` to `~/.config/sc-instagram/env` and stops.
-Fill it in, re-run, and it runs `doctor.py` then installs four launchd jobs.
+`setup_credentials.py` walks through each secret, says where to find it,
+verifies it on the spot, and writes `~/.config/sc-instagram/env` at 0600.
+Secrets are read with `getpass`, so they never echo or reach your shell
+history. It saves after each section and is safe to re-run — Enter keeps an
+existing value.
+
+`install.sh` then runs `doctor.py` and installs four launchd jobs.
 
 ```
 ig-approve   always on   Telegram buttons
