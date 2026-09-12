@@ -144,6 +144,16 @@ def published_on(conn: sqlite3.Connection, day) -> int:
     return int(row["n"])
 
 
+def slots_taken(conn: sqlite3.Connection, day) -> int:
+    """Posts already holding a publishing slot on a target day."""
+    row = conn.execute(
+        """SELECT COUNT(*) AS n FROM posts
+            WHERE target_date = ? AND status IN ('approved', 'published')""",
+        (day.isoformat(),),
+    ).fetchone()
+    return int(row["n"])
+
+
 def queued_for(conn: sqlite3.Connection, day) -> list[sqlite3.Row]:
     """Everything already prepared for a target date, in slot order."""
     return conn.execute(
@@ -151,4 +161,11 @@ def queued_for(conn: sqlite3.Connection, day) -> list[sqlite3.Row]:
             WHERE target_date = ? AND status IN ('pending', 'approved', 'published')
             ORDER BY id""",
         (day.isoformat(),),
+    ).fetchall()
+
+
+def offered_for(conn: sqlite3.Connection, day) -> list[sqlite3.Row]:
+    """Everything ever offered for a target day, whatever its status."""
+    return conn.execute(
+        "SELECT * FROM posts WHERE target_date = ? ORDER BY id", (day.isoformat(),)
     ).fetchall()

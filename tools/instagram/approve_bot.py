@@ -56,32 +56,40 @@ def handle_callback(conn, query: dict) -> None:
                       text="That post is gone.", show_alert=True)
         return
 
-    if post["status"] != "pending":
+    if post["status"] == "published":
         telegram.call("answerCallbackQuery", callback_query_id=query["id"],
-                      text=f"Already {post['status']}.", show_alert=True)
-        telegram.settle(message, f"— already {post['status']} —")
+                      text="Already published — too late to change.", show_alert=True)
+        telegram.settle(message, "— already published —")
+        return
+
+    if action == "a" and post["status"] == "approved":
+        telegram.call("answerCallbackQuery", callback_query_id=query["id"],
+                      text="Already approved.")
+        return
+    if action == "d" and post["status"] == "declined":
+        telegram.call("answerCallbackQuery", callback_query_id=query["id"],
+                      text="Already declined.")
         return
 
     if action == "a":
-        store.update(conn, post["id"], status="approved")
+        when = pipeline.assign_slot(conn, post)
+        if when is None:
+            telegram.call("answerCallbackQuery", callback_query_id=query["id"],
+                          text=f"That day is full ({config.MAX_POSTS_PER_DAY} posts). "
+                               f"Decline one first.", show_alert=True)
+            return
         telegram.call("answerCallbackQuery", callback_query_id=query["id"],
-                      text="Approved — queued to publish.")
-        telegram.settle(message,
-                        f"✅ APPROVED — publishes {pipeline.local_label(post['scheduled_for'])}")
+                      text=f"Approved — publishes {when}.")
+        telegram.settle(message, f"✅ APPROVED — publishes {when}")
 
     elif action == "d":
-        store.update(conn, post["id"], status="declined")
+        # Declining something already approved releases its slot for another.
+        freed = post["status"] == "approved"
+        store.update(conn, post["id"], status="declined", scheduled_for=None)
         telegram.call("answerCallbackQuery", callback_query_id=query["id"],
-                      text="Declined.")
-        telegram.settle(message, "🚫 DECLINED — nothing will be posted.")
-
-    elif action == "n":
-        store.update(conn, post["id"], status="declined")
-        telegram.call("answerCallbackQuery", callback_query_id=query["id"],
-                      text="Fetching the next candidate…")
-        telegram.settle(message, "⏭ SKIPPED — showing the next candidate.")
-        if pipeline.advance(conn, post) is None:
-            telegram.notify("That was the last candidate for today.")
+                      text="Slot released." if freed else "Declined.")
+        telegram.settle(message, "🚫 DECLINED — slot released." if freed
+                        else "🚫 DECLINED — nothing will be posted.")
 
 
 def main() -> int:

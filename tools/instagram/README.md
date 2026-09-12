@@ -14,10 +14,16 @@ daily.py (09:00, for TOMORROW) ──► image ──► render ──► Telegr
                             (on the target day, 30 min apart)   (saves + relinks)
 ```
 
-Each morning prepares **the following day**, so there is a full day to review.
-Every post is pinned to its target date and publishes on that date — approving
-late does not move it to the wrong day. `SCIG_POSTS_PER_DAY` posts are prepared
-per day, staggered by `SCIG_PUBLISH_STAGGER_MIN` from `SCIG_PUBLISH_AT`.
+Each morning offers **every candidate for the following day at once** — an
+index message first, then one preview each — so you choose knowing the whole
+field rather than one at a time.
+
+Approving a post assigns it the next free publishing slot on its target day:
+`SCIG_PUBLISH_AT`, then every `SCIG_PUBLISH_STAGGER_MIN`. Slots follow the
+order you approve in, not the order offered. Declining something already
+approved releases its slot for another. Nothing publishes on the wrong day:
+each post is pinned to its target date, and times are resolved in
+`SCIG_TIMEZONE` rather than whatever clock the host happens to run.
 
 **No language model is involved anywhere in this pipeline.** Everything is
 plain Python: Pillow for rendering, the Telegram Bot API for approval, boto3

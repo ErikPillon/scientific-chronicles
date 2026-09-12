@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-"""Daily job: prepare the next day's posts and send them for approval.
+"""Daily job: offer every candidate for an upcoming day, all at once.
 
-Runs each morning for the day after, so there is a full day to approve
-before anything is due. Each post is pinned to its own target date and to a
-staggered slot within it.
+Each morning this sends an index of everything available for the target day
+followed by one preview per candidate, so the choice is made knowing the
+whole field rather than one at a time. Approving a post assigns it the next
+free publishing slot on its target day.
 """
 from __future__ import annotations
 
@@ -19,27 +20,30 @@ import store
 import telegram
 
 
+def _source_label(cand, path) -> str:
+    return ("corpus asset" if cand.image else "wikimedia" if path else "card")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--date", help="target day, as YYYY-MM-DD")
-    parser.add_argument("--days-ahead", type=int, default=config.LEAD_DAYS,
-                        help=f"days ahead to prepare (default {config.LEAD_DAYS})")
-    parser.add_argument("--count", type=int, default=config.POSTS_PER_DAY,
-                        help=f"posts to prepare (default {config.POSTS_PER_DAY})")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="print what would be prepared, queue nothing")
+    parser.add_argument("--days-ahead", type=int, default=config.LEAD_DAYS)
+    parser.add_argument("--limit", type=int, default=config.OFFER_LIMIT,
+                        help=f"most candidates to offer (default {config.OFFER_LIMIT})")
+    parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--again", action="store_true",
-                        help="prepare more even if the day already has posts")
+                        help="offer again even if this day was already offered")
     args = parser.parse_args()
 
     target = (date.fromisoformat(args.date) if args.date
               else date.today() + timedelta(days=args.days_ahead))
     conn = store.connect()
 
-    existing = store.queued_for(conn, target)
-    if existing and not args.again:
-        summary = ", ".join(f"#{r['id']} {r['title']} ({r['status']})" for r in existing)
-        print(f"{target} already prepared: {summary}")
+    already = store.offered_for(conn, target)
+    if already and not args.again:
+        live = [r for r in already if r["status"] in ("pending", "approved", "published")]
+        print(f"{target} already offered: {len(already)} candidates, "
+              f"{len(live)} still live")
         return 0
 
     candidates = pipeline.candidates_for(conn, target)
@@ -48,36 +52,34 @@ def main() -> int:
         print(f"no candidates for {target}")
         return 0
 
-    wanted = max(1, args.count)
-    pool = [c.source_path for c in candidates][: wanted + 6]
-    chosen = candidates[:wanted]
-    first_slot = len(existing)
+    chosen = candidates[: max(1, args.limit)]
+    resolved = [(c, content.resolve_image(c, live=not args.dry_run)) for c in chosen]
 
     if args.dry_run:
-        print(f"target {target} — {len(candidates)} candidates, preparing {len(chosen)}")
-        for offset, cand in enumerate(chosen):
-            slot = first_slot + offset
-            path, credit = content.resolve_image(cand, live=False)
-            source = ("corpus asset" if cand.image else
-                      "wikimedia" if path else "none — card")
-            when = pipeline.local_label(pipeline.scheduled_at(target, slot))
-            print(f"  slot {slot + 1}: {cand.title}  [{source}]  publishes {when}")
+        print(f"target {target} — {len(candidates)} candidates, would offer {len(chosen)}")
+        for i, (cand, (path, _)) in enumerate(resolved, 1):
+            print(f"  {i:2}. {cand.title[:36]:36} {cand.occasion or cand.kind:8} "
+                  f"{cand.year or '—':>6}  [{_source_label(cand, path)}]")
+        slots = ", ".join(pipeline.local_label(pipeline.scheduled_at(target, i))
+                          for i in range(min(3, config.MAX_POSTS_PER_DAY)))
+        print(f"  slots as approved: {slots} …")
         return 0
 
-    queued = []
-    for offset, cand in enumerate(chosen):
-        slot = first_slot + offset
-        post_id = pipeline.build_and_queue(conn, cand, target, rank=offset,
-                                           pool=pool, slot=slot)
-        queued.append(f"#{post_id} {cand.title}")
-        print(f"queued slot {slot + 1}: {cand.title}")
+    # Index first, so the field is visible before the previews scroll past.
+    lines = [f"🗓 <b>{target:%A %d %B}</b> — {len(chosen)} candidates\n"]
+    for i, (cand, (path, _)) in enumerate(resolved, 1):
+        what = cand.occasion.lower() if cand.occasion else cand.kind
+        lines.append(f"{i}. <b>{telegram._esc(cand.title)}</b> — {what}"
+                     f"{f' {cand.year}' if cand.year else ''} · {_source_label(cand, path)}")
+    lines.append(f"\nApprove the ones you want. Each approval takes the next slot: "
+                 f"{config.PUBLISH_AT} {config.TIMEZONE.split('/')[-1]}, then every "
+                 f"{config.PUBLISH_STAGGER_MIN} min, up to {config.MAX_POSTS_PER_DAY}/day.")
+    telegram.notify("\n".join(lines))
 
-    telegram.notify(
-        f"🗓 <b>{target:%A %d %B}</b> — {len(queued)} post(s) ready for review.\n"
-        + "\n".join(queued)
-        + f"\n\nApprove each one above. They publish on {target:%d %b}, "
-          f"{config.PUBLISH_STAGGER_MIN} min apart from {config.PUBLISH_AT}."
-    )
+    for rank, (cand, _) in enumerate(resolved):
+        post_id = pipeline.build_and_queue(conn, cand, target, rank=rank,
+                                           total=len(resolved))
+        print(f"offered {rank + 1}/{len(resolved)}: #{post_id} {cand.title}")
     return 0
 
 

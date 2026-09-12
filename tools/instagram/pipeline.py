@@ -21,8 +21,9 @@ def scheduled_at(target_day: date, slot: int = 0) -> str:
     that is already past on the current day is pulled forward to now.
     """
     hour, _, minute = config.PUBLISH_AT.partition(":")
-    local = (datetime.combine(target_day, dtime(int(hour), int(minute or 0)))
-             + timedelta(minutes=slot * config.PUBLISH_STAGGER_MIN)).astimezone()
+    local = (datetime.combine(target_day, dtime(int(hour), int(minute or 0)),
+                              tzinfo=config.tz())
+             + timedelta(minutes=slot * config.PUBLISH_STAGGER_MIN))
     target = local.astimezone(timezone.utc)
     if target_day <= date.today():
         target = max(target, datetime.now(timezone.utc))
@@ -30,11 +31,12 @@ def scheduled_at(target_day: date, slot: int = 0) -> str:
 
 
 def local_label(iso: str) -> str:
-    return datetime.fromisoformat(iso).astimezone().strftime("%a %d %b, %H:%M")
+    moment = datetime.fromisoformat(iso).astimezone(config.tz())
+    return moment.strftime("%a %d %b, %H:%M %Z")
 
 
 def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_day: date,
-                    *, rank: int, pool: list[str], slot: int = 0) -> int:
+                    *, rank: int, total: int) -> int:
     """Render the image, queue the post, and send the approval preview."""
     config.ensure_dirs()
     # Resolve the image first: a Wikimedia credit has to reach the caption.
@@ -42,7 +44,7 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_da
     cand.credit = credit
     caption = content.build_caption(cand, target_day)
     slug = Path(cand.source_path).stem[:48]
-    image_path = config.MEDIA_DIR / f"{target_day.isoformat()}-{slot}-{rank:02d}-{slug}.jpg"
+    image_path = config.MEDIA_DIR / f"{target_day.isoformat()}-{rank:02d}-{slug}.jpg"
 
     origin = render.render(
         title=cand.title,
@@ -53,7 +55,8 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_da
         out_path=image_path,
     )
 
-    when = scheduled_at(target_day, slot)
+    # No time yet: the publishing slot is assigned when you approve, so the
+    # order reflects what you actually chose rather than what was offered.
     post_id = store.add_post(
         conn,
         mmdd=target_day.strftime("%m-%d"),
@@ -66,8 +69,8 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_da
         image_origin=origin,
         status="pending",
         tg_chat_id=telegram.chat_id(),
-        scheduled_for=when,
-        meta={"rank": rank, "slot": slot, "pool": pool, "score": round(cand.score, 1),
+        scheduled_for=None,
+        meta={"rank": rank, "score": round(cand.score, 1),
               "asset": photo_path or "", "credit": credit,
               "day": target_day.isoformat()},
     )
@@ -76,11 +79,11 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_da
         image_path=image_path,
         caption_text=telegram.preview_caption(
             title=cand.title, source_path=cand.source_path, image_origin=origin,
-            scheduled_for=local_label(when), caption=caption,
-            rank=f"slot {slot + 1} · candidate {rank + 1} of {len(pool)}",
+            scheduled_for=f"{target_day:%a %d %b} — slot assigned when you approve",
+            caption=caption,
+            rank=f"{rank + 1} of {total}",
         ),
         post_id=post_id,
-        has_next=rank + 1 < len(pool),
         full_caption=caption,
     )
     store.update(conn, post_id, tg_message_id=message["message_id"])
@@ -92,26 +95,34 @@ def candidates_for(conn: sqlite3.Connection, target_day: date) -> list[content.C
                         store.recently_posted(conn))
 
 
-def advance(conn: sqlite3.Connection, post: sqlite3.Row) -> int | None:
-    """Queue the next-best candidate after the one in `post` was passed over."""
-    meta = json.loads(post["meta"] or "{}")
-    pool: list[str] = meta.get("pool", [])
-    slot = int(meta.get("slot", 0))
-    next_rank = int(meta.get("rank", 0)) + 1
+def assign_slot(conn: sqlite3.Connection, post) -> str | None:
+    """Give an approved post the earliest free slot on its target day.
 
-    # Do not offer something already taken by another slot for the same day.
+    Slots are matched on their actual times rather than counted, so declining
+    an approved post frees its slot and the next approval reuses it instead of
+    colliding with one still held.
+
+    Returns the local label, or None when every slot is taken.
+    """
     target_day = (date.fromisoformat(post["target_date"]) if post["target_date"]
                   else date.today())
-    taken = {r["source_path"] for r in store.queued_for(conn, target_day)}
-
-    while next_rank < len(pool):
-        wanted = pool[next_rank]
-        if wanted in taken:
-            next_rank += 1
+    taken = {
+        row["scheduled_for"]
+        for row in conn.execute(
+            """SELECT scheduled_for FROM posts
+                WHERE target_date = ? AND id != ?
+                  AND status IN ('approved', 'published')""",
+            (target_day.isoformat(), post["id"]),
+        )
+        if row["scheduled_for"]
+    }
+    for slot in range(config.MAX_POSTS_PER_DAY):
+        when = scheduled_at(target_day, slot)
+        if when in taken:
             continue
-        for cand in content.pick(post["mmdd"], target_day, set()):
-            if cand.source_path == wanted:
-                return build_and_queue(conn, cand, target_day, rank=next_rank,
-                                       pool=pool, slot=slot)
-        next_rank += 1
+        meta = json.loads(post["meta"] or "{}")
+        meta["slot"] = slot
+        store.update(conn, post["id"], status="approved", scheduled_for=when,
+                     meta=json.dumps(meta))
+        return local_label(when)
     return None

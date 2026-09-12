@@ -47,21 +47,35 @@ LOG_DIR = STATE_DIR / "logs"
 # How many days must pass before the same source item may be posted again.
 REPOST_COOLDOWN_DAYS = int(get("SCIG_REPOST_COOLDOWN_DAYS", "365"))
 
-# Local time of the first publishing slot (HH:MM, 24h).
-PUBLISH_AT = get("SCIG_PUBLISH_AT", "17:00")
+# Publishing times are pinned to a real timezone rather than the host's, so
+# the same schedule holds whether this runs on a laptop in Rome or a server
+# whose clock is UTC.
+TIMEZONE = get("SCIG_TIMEZONE", "Europe/Rome")
+
+
+def tz():
+    from zoneinfo import ZoneInfo
+    return ZoneInfo(TIMEZONE)
+
+
+# Time of the first publishing slot in TIMEZONE (HH:MM, 24h).
+PUBLISH_AT = get("SCIG_PUBLISH_AT", "08:00")
 
 # Minutes between consecutive slots on the same day.
 PUBLISH_STAGGER_MIN = int(get("SCIG_PUBLISH_STAGGER_MIN", "30"))
 
-# How many posts to prepare and preview for each day.
-POSTS_PER_DAY = int(get("SCIG_POSTS_PER_DAY", "2"))
+# How many candidates to offer for review each morning. Every one of them is
+# sent up front so the choice is made knowing the whole field.
+OFFER_LIMIT = int(get("SCIG_OFFER_LIMIT", "10"))
 
 # How far ahead to prepare. 1 means each morning previews tomorrow, giving a
 # full day to approve before anything is due.
 LEAD_DAYS = int(get("SCIG_LEAD_DAYS", "1"))
 
-# Hard ceiling per calendar day. Instagram allows 25 per rolling 24h.
-MAX_POSTS_PER_DAY = int(get("SCIG_MAX_POSTS_PER_DAY", str(POSTS_PER_DAY)))
+# Hard ceiling on how many of the offered candidates can be approved for one
+# day. Approvals are the real control; this only stops runaway. Instagram
+# allows 25 per rolling 24h.
+MAX_POSTS_PER_DAY = int(get("SCIG_MAX_POSTS_PER_DAY", "6"))
 
 
 def ensure_dirs() -> None:

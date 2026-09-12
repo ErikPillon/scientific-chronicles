@@ -43,14 +43,11 @@ def call(method: str, *, files=None, http_timeout: int = 30, **params) -> dict[s
     return payload["result"]
 
 
-def keyboard(post_id: int, *, has_next: bool) -> dict:
-    rows = [[
+def keyboard(post_id: int) -> dict:
+    return {"inline_keyboard": [[
         {"text": "✅ Approve", "callback_data": f"a:{post_id}"},
         {"text": "🚫 Decline", "callback_data": f"d:{post_id}"},
-    ]]
-    if has_next:
-        rows.append([{"text": "🔀 Show next candidate", "callback_data": f"n:{post_id}"}])
-    return {"inline_keyboard": rows}
+    ]]}
 
 
 def preview_caption(*, title: str, source_path: str, image_origin: str,
@@ -77,14 +74,14 @@ def _esc(text: str) -> str:
 
 
 def send_preview(*, image_path: Path, caption_text: str, post_id: int,
-                 has_next: bool, full_caption: str) -> dict:
+                 full_caption: str) -> dict:
     with open(image_path, "rb") as handle:
         message = call(
             "sendPhoto",
             chat_id=chat_id(),
             caption=caption_text,
             parse_mode="HTML",
-            reply_markup=keyboard(post_id, has_next=has_next),
+            reply_markup=keyboard(post_id),
             files={"photo": (image_path.name, handle, "image/jpeg")},
             http_timeout=60,
         )
