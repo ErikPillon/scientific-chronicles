@@ -41,6 +41,7 @@ zero.
 | `refresh_token.py` | Monthly; keeps the ~60-day Instagram token alive |
 | `doctor.py` | Preflight — checks every credential and hop |
 | `backfill.py` | Pre-fetch Wikimedia portraits for the whole corpus |
+| `status.py` | Shows the queue: approved, waiting, published |
 | `contact_sheet.py` | Review sheet of the corpus image pool |
 | `assets.py` | Saves a published portrait into the repo and relinks the markdown |
 | `wikimedia.py` | Portrait lookup, identity check, licence filter, cache |
@@ -134,7 +135,11 @@ through to Wikimedia instead.
 
 ## Day-to-day
 
+From Telegram: `/status` shows the queue, `/help` the basics.
+
 ```bash
+.venv/bin/python status.py                 # approved, waiting, published
+.venv/bin/python status.py --days 7 --all  # wider window, include declined
 .venv/bin/python daily.py --dry-run        # what would post today
 .venv/bin/python daily.py                  # send today's preview now
 .venv/bin/python publish_due.py --force    # publish approved posts immediately

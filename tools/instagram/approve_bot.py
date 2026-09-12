@@ -92,6 +92,31 @@ def handle_callback(conn, query: dict) -> None:
                         else "🚫 DECLINED — nothing will be posted.")
 
 
+def handle_message(conn, message: dict) -> None:
+    """Answer the handful of text commands, owner only."""
+    if str(message.get("chat", {}).get("id", "")) != telegram.chat_id():
+        return
+    text = (message.get("text") or "").strip().lower().split("@")[0]
+
+    if text in ("/status", "/queue"):
+        import status
+        lines = status.summarise(conn, days=3, include_declined=False)
+        header = (f"<b>Queue</b>\n{config.PUBLISH_AT} {config.TIMEZONE}, every "
+                  f"{config.PUBLISH_STAGGER_MIN} min, max "
+                  f"{config.MAX_POSTS_PER_DAY}/day\n")
+        telegram.notify(header + "<pre>" + telegram._esc("\n".join(lines)) + "</pre>")
+
+    elif text in ("/help", "/start"):
+        telegram.notify(
+            "<b>Scientific Chronicles</b>\n"
+            "/status — what is approved, waiting and published\n\n"
+            "Each morning you get every candidate for the next day. "
+            "Approve the ones you want; each approval takes the next slot "
+            f"from {config.PUBLISH_AT} {config.TIMEZONE.split('/')[-1]}, "
+            f"{config.PUBLISH_STAGGER_MIN} min apart."
+        )
+
+
 def main() -> int:
     conn = store.connect()
     offset = _read_offset()
@@ -101,7 +126,8 @@ def main() -> int:
         try:
             updates = telegram.call(
                 "getUpdates", offset=offset, timeout=POLL_TIMEOUT,
-                allowed_updates=["callback_query"], http_timeout=POLL_TIMEOUT + 15,
+                allowed_updates=["callback_query", "message"],
+                http_timeout=POLL_TIMEOUT + 15,
             )
         except Exception as exc:
             print(f"poll error: {exc}", file=sys.stderr, flush=True)
@@ -111,11 +137,13 @@ def main() -> int:
         for update in updates:
             offset = update["update_id"] + 1
             _write_offset(offset)
-            if "callback_query" in update:
-                try:
+            try:
+                if "callback_query" in update:
                     handle_callback(conn, update["callback_query"])
-                except Exception:
-                    traceback.print_exc()
+                elif "message" in update:
+                    handle_message(conn, update["message"])
+            except Exception:
+                traceback.print_exc()
 
 
 if __name__ == "__main__":
