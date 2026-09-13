@@ -65,7 +65,7 @@ def build_and_queue(conn: sqlite3.Connection, cand: content.Candidate, target_da
         source_path=cand.source_path,
         title=cand.title,
         caption=caption,
-        image_path=str(image_path),
+        image_path=image_path.name,
         image_origin=origin,
         status="pending",
         tg_chat_id=telegram.chat_id(),
@@ -125,4 +125,31 @@ def assign_slot(conn: sqlite3.Connection, post) -> str | None:
         store.update(conn, post["id"], status="approved", scheduled_for=when,
                      meta=json.dumps(meta))
         return local_label(when)
+    return None
+
+
+def rerender(conn: sqlite3.Connection, post) -> Path | None:
+    """Rebuild a post's image from its source, for when the file is gone.
+
+    A queue synced between machines arrives without the rendered JPEGs, and
+    losing an approved post to a missing file is worse than spending a second
+    regenerating it.
+    """
+    import json as _json
+    meta = _json.loads(post["meta"] or "{}")
+    target_day = (date.fromisoformat(post["target_date"]) if post["target_date"]
+                  else date.today())
+    for cand in content.collect(post["mmdd"]):
+        if cand.source_path != post["source_path"]:
+            continue
+        photo_path, credit = content.resolve_image(cand)
+        out = config.MEDIA_DIR / Path(post["image_path"]).name
+        origin = render.render(
+            title=cand.title,
+            eyebrow=render.eyebrow_for(cand.kind, cand.occasion, target_day),
+            headline=cand.headline, year=cand.year,
+            photo_path=photo_path, out_path=out,
+        )
+        store.update(conn, post["id"], image_path=out.name, image_origin=origin)
+        return out
     return None

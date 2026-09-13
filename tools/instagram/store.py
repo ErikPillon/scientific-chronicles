@@ -98,6 +98,22 @@ def update(conn: sqlite3.Connection, post_id: int, **fields: Any) -> None:
     conn.commit()
 
 
+def media_path(stored: str):
+    """Resolve a stored image reference to a local file.
+
+    Rows written before this was relative hold the absolute path of whichever
+    machine rendered them, so fall back to the basename under this host's
+    media directory.
+    """
+    from pathlib import Path
+    if not stored:
+        return None
+    candidate = Path(stored)
+    if candidate.is_absolute() and candidate.is_file():
+        return candidate
+    return config.MEDIA_DIR / candidate.name
+
+
 def get_post(conn: sqlite3.Connection, post_id: int) -> sqlite3.Row | None:
     return conn.execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
 

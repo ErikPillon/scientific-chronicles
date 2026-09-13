@@ -108,11 +108,14 @@ def delete_message(message_id: int) -> bool:
 
 
 def notify(text: str) -> None:
+    """Best-effort message. Never raises, but says so when it fails —
+    a swallowed alert is how a failure becomes a silent one."""
     try:
         call("sendMessage", chat_id=chat_id(), text=text,
              parse_mode="HTML", disable_web_page_preview=True)
-    except Exception:
-        pass
+    except Exception as exc:
+        import sys as _sys
+        print(f"telegram notify failed: {exc}", file=_sys.stderr)
 
 
 def settle(message: dict, verdict: str) -> None:

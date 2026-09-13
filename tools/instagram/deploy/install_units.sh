@@ -25,6 +25,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
+Environment=PYTHONUNBUFFERED=1
 WorkingDirectory=$DIR
 ExecStart=$PY $DIR/approve_bot.py
 Restart=always
@@ -45,6 +46,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+Environment=PYTHONUNBUFFERED=1
 WorkingDirectory=$DIR
 ExecStart=$PY $DIR/$script
 EOF

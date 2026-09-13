@@ -16,6 +16,7 @@ from pathlib import Path
 import assets
 import config
 import instagram
+import pipeline
 import r2
 import store
 import telegram
@@ -30,9 +31,14 @@ def publish_one(conn, post) -> None:
     meta["attempts"] = attempts
 
     try:
-        image_path = Path(post["image_path"])
-        if not image_path.is_file():
-            raise RuntimeError(f"rendered image missing: {image_path}")
+        image_path = store.media_path(post["image_path"])
+        if image_path is None or not image_path.is_file():
+            print(f"post {post_id}: image missing, re-rendering", file=sys.stderr)
+            image_path = pipeline.rerender(conn, post)
+            if image_path is None or not image_path.is_file():
+                raise RuntimeError(
+                    f"rendered image missing and could not be rebuilt "
+                    f"from {post['source_path']}")
 
         url = post["r2_url"]
         if not url:
