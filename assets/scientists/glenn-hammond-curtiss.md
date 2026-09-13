@@ -12,7 +12,8 @@ disciplines:
   - "Motorcycles"
 headline: "The pioneering American aviator and motor manufacturer who sped from motorcycles to making airplanes fly."
 quote: ""
-image: "glenn-hammond-curtiss.png"
+image: "glenn-hammond-curtiss.jpg"
+image_credit: "Photo: Unknown author Unknown author ( Bain News Service ). via Wikimedia Commons"
 ---
 
 Glenn Curtiss wasn't just fast; he was *first*. Starting his career zooming on motorcycles, he quickly shifted gears to conquer the skies. From crafting engines for airships to building and flying his own airplanes, Curtiss was a true innovator in early aviation. He even scooped up the first U.S. pilot's license! This speed demon turned sky king played a huge role in getting America off the ground, literally establishing one of the earliest aviation companies and setting records that paved the way for modern flight.

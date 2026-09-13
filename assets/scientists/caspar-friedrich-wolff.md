@@ -12,7 +12,8 @@ disciplines:
   - "Botany"
 headline: "The groundbreaking embryologist who debunked preformation and championed epigenesis."
 quote: ""
-image: "caspar-friedrich-wolff.png"
+image: "caspar-friedrich-wolff.jpg"
+image_credit: "Photo: F. Anting Liftarn via Wikimedia Commons"
 ---
 
 Caspar Friedrich Wolff, born in Germany in 1734, was the biological rebel who took on the prevailing wisdom of his day. In the 18th century, many believed in 'preformation' — the idea that an organism was fully formed, just tiny, inside the egg or sperm. Wolff, however, through meticulous observation of developing chick embryos and plants, boldly argued for 'epigenesis.' He showed that structures actually *develop and differentiate* from undifferentiated tissue over time, not just grow larger. His detailed microscopical work, published in *Theoria Generationis* (1759), was a fundamental shift in understanding how life forms, making him a true father of modern embryology. Talk about a visionary!

@@ -11,7 +11,8 @@ books:
   - author: Steven Johnson
     title: "The Ghost Map: The Story of London's Most Terrifying Epidemic"
     link: https://amzn.to/3T4qWeR
-image: john_snow_pump_handle.jpg
+image: "john-snow.jpg"
+image_credit: "Photo: Unknown via Wikimedia Commons"
 ---
 
 Yes, his name was John Snow. And contrary to the meme, he actually knew quite a lot. 

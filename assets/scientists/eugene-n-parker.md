@@ -11,7 +11,8 @@ disciplines:
   - "Plasma Physics"
 headline: "Predicted the solar wind and the Parker spiral, revolutionizing our understanding of the Sun's influence on space."
 quote: ""
-image: "eugene-n-parker.png"
+image: "eugene-n-parker.jpg"
+image_credit: "Photo: NASA's Scientific Visualization Studio - KBR Wyle Services, LLC/Joy Ng via Wikimedia Commons"
 ---
 
 Meet Eugene Parker, the guy who basically looked at the Sun and said, 'You know what? I bet you're blowing stuff at us all the time!' In the 1950s, while most folks were worried about hula hoops, Parker was cooking up the idea of the solar wind – a constant stream of particles blasting from our star. His predictions were so wild, journals initially rejected them! But guess what? He was right. Space probes later confirmed his 'Parker spiral' and the solar wind, changing how we see our Sun and the entire solar system. He even got a NASA probe named after him. Not too shabby for a theory that was almost binned!

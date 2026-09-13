@@ -12,7 +12,8 @@ disciplines:
   - "Manufacturing"
 headline: "The father of American mass-produced clocks, revolutionizing timekeeping for the everyday person."
 quote: ""
-image: "eli-terry.png"
+image: "eli-terry.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Before Eli Terry, clocks were luxury items, handcrafted and pricey. This Yankee inventor changed all that. Terry was a shrewd entrepreneur who figured out how to churn out clocks using interchangeable parts and water-powered machinery, bringing the tick-tock of precision timekeeping to every mantelpiece in America. He didn't just invent clocks; he invented a whole new way of making things, helping kickstart the American manufacturing revolution. So next time you glance at the clock, remember the guy who made sure everyone could afford one!

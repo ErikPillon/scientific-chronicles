@@ -14,7 +14,8 @@ disciplines:
   - "Paleontology"
 headline: "A polymath who excavated prehistoric sites, collected early American artifacts, and championed traditional craftsmanship."
 quote: ""
-image: "henry-chapman-mercer.png"
+image: "henry-chapman-mercer.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Henry Chapman Mercer (1856-1930) was a true Renaissance man, but with more dirt under his fingernails. He started out digging up prehistoric artifacts in Pennsylvania caves, becoming a pioneer in American archaeology. Not content with just that, he then pivoted to collecting pretty much every pre-industrial tool and craft imaginable, preserving a slice of early American life for future generations. Oh, and he also founded a famous tileworks, bringing back traditional artisan methods. So, archaeologist, anthropologist, historian, and artsy craftsman? Yep, that's Mercer in a nutshell – a man determined to understand and preserve the past, one artifact (or tile!) at a time.

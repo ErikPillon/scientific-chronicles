@@ -12,7 +12,8 @@ books:
   - author: Susan Sontag
     title: "On Photography"
     link: https://amzn.to/48XYZ12
-image: gabriel_lippmann_prism.jpg
+image: "gabriel-lippmann.jpg"
+image_credit: "Photo: Nobel Foundation via Wikimedia Commons"
 ---
 
 We have another Luxembourg-born genius on the board. Back in the late 1800s, photographs were strictly black and white. A few people tried to make color photos by just painting over the black-and-white prints or using messy chemical dyes. 

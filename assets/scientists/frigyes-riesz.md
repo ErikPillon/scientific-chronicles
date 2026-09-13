@@ -10,7 +10,8 @@ disciplines:
   - "Mathematics"
 headline: "A Hungarian mathematician who co-founded functional analysis, laying crucial groundwork for modern mathematical theory."
 quote: ""
-image: "frigyes-riesz.png"
+image: "frigyes-riesz.jpg"
+image_credit: "Photo: Unknown via Wikimedia Commons"
 ---
 
 If you've ever delved into the deep end of modern mathematics, especially functional analysis, you've got Frigyes Riesz to thank (or blame, depending on the complexity of your homework). This Hungarian mathematical maestro, along with his brother Marcel, pretty much laid the foundation for the entire field in the early 20th century. His work on linear operators and function spaces was like building the sophisticated scaffolding needed for quantum mechanics and advanced physics to stand tall. He made abstract spaces feel... well, not quite cozy, but definitely more organized. No easy feat!

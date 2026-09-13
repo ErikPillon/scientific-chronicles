@@ -11,7 +11,8 @@ disciplines:
   - "Osteopathy"
 headline: "The pioneering American physician who founded osteopathy, a whole-person approach to health still influencing medicine today."
 quote: ""
-image: "andrew-taylor-still.png"
+image: "andrew-taylor-still.jpg"
+image_credit: "Photo: Unknown (Library of Congress collection) via Wikimedia Commons"
 ---
 
 Tired of the 19th-century medical scene with its questionable remedies and often terrifying procedures? So was Andrew Taylor Still! This American physician, born in 1828, had enough of mercury-laced 'cures' and amputations. After personal tragedy, he went rogue, founding osteopathy in 1874. Still preached a revolutionary idea: the body has an innate ability to heal itself, and structural integrity (especially the musculoskeletal system) is key to health. He believed in treating the whole person, not just symptoms, and championed manual manipulation to restore balance. His 'lightning rod of health' philosophy sparked a whole new branch of medicine that’s still thriving today, proving that sometimes the best medicine is a good, holistic adjustment!

@@ -12,7 +12,8 @@ books:
   - author: John Keay
     title: "The Great Arc: The Dramatic Tale of How India was Mapped and Everest was Named"
     link: https://amzn.to/3T8yxz2
-image: george_everest_theodolite.jpg
+image: "sir-george-everest.jpg"
+image_credit: "Photo: Maull & Polyblank via Wikimedia Commons"
 ---
 
 Sir George Everest spent decades running the Great Trigonometrical Survey of India. His job was to map the entire subcontinent with obsessive mathematical precision, fighting through malaria, tigers, and monsoon rains just to measure giant triangles on the ground. 

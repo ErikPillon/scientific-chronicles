@@ -12,7 +12,8 @@ disciplines:
   - "Invention"
 headline: "Louis Pasteur's assistant who invented the life-saving porcelain filter for sterilizing liquids."
 quote: ""
-image: "charles-edouard-chamberland.png"
+image: "charles-edouard-chamberland.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Ever heard of a porcelain filter? You can thank Charles Chamberland, Louis Pasteur's brilliant protégé, for making it a household name... in the lab, at least! This French microbiologist was instrumental in Pasteur's revolutionary work, but his greatest individual claim to fame came in 1884. That's when he invented the Chamberland filter, a super-fine ceramic sieve capable of removing bacteria from liquids. Before this, sterilizing liquids was a nightmare. His invention became a cornerstone of microbiology, allowing scientists to study viruses (which passed through the filter, hence 'filterable agents') and purify drinking water, saving countless lives. Talk about a clean sweep for science!

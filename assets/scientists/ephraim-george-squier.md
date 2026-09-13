@@ -13,7 +13,8 @@ disciplines:
   - "Diplomacy"
 headline: "The American archaeologist who documented ancient mounds and kickstarted systematic studies of pre-Columbian cultures."
 quote: ""
-image: "ephraim-george-squier.png"
+image: "ephraim-george-squier.jpg"
+image_credit: "Photo: Frances Carner. Original artist S.W. via Wikimedia Commons"
 ---
 
 Ephraim George Squier was a man of many hats – journalist, diplomat, and pioneering archaeologist. He's best known for teaming up with Edwin H. Davis to survey and map the mysterious ancient earthworks left by prehistoric cultures in the Mississippi Valley, a project that culminated in "Ancient Monuments of the Mississippi Valley." This wasn't just some casual digging; it was the first systematic archaeological study in the U.S. and a huge deal for understanding early American history. So, next time you think about forgotten civilizations, remember Squier, the guy who gave those ancient mounds their moment in the scientific spotlight!

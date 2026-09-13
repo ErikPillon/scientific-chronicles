@@ -11,7 +11,8 @@ disciplines:
   - "Hydrology"
 headline: "A pioneering meteorologist who established the British Rainfall Organisation, standardizing rainfall measurement across the UK."
 quote: ""
-image: "george-james-symons.png"
+image: "george-james-symons.jpg"
+image_credit: "Photo: Photographer's name is illegible in bottom left corner of image. via Wikimedia Commons"
 ---
 
 George James Symons might not have predicted the weather with magical powers, but he gave us the tools to understand it systematically. This Victorian meteorologist founded the British Rainfall Organisation, turning a chaotic mess of local observations into a standardized, national network for measuring rainfall. He convinced thousands of volunteers to record data meticulously, essentially creating a citizen science project long before the term existed. Thanks to his tireless efforts, we got clearer pictures of weather patterns and vital data for agriculture and water management. Symons basically said, "Let's stop guessing about the rain and start measuring it properly!" and made sure everyone had the right tools for the job.

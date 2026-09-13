@@ -11,7 +11,8 @@ disciplines:
     - "Physics"
 headline: The self-taught eccentric who made modern electrical engineering actually work.
 quote: "Shall I refuse my dinner because I do not fully understand the process of digestion?"
-image: oliver_heaviside_telegraph.jpg
+image: "oliver-heaviside.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Oliver Heaviside was brilliantly, unapologetically bizarre. He painted his fingernails bright pink, replaced his furniture with giant granite blocks, and suffered from severe hearing loss. He was also entirely self-taught. ⚡️📻

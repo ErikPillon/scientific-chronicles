@@ -13,7 +13,8 @@ disciplines:
   - "Physics"
 headline: "A prominent patron of science and an active scientific researcher, known for developing the thermometer and advocating for experimental science."
 quote: ""
-image: "ferdinand-ii-de-medici.png"
+image: "ferdinand-ii-de-medici.jpg"
+image_credit: "Photo: Justus Sustermans via Wikimedia Commons"
 ---
 
 Forget just ruling a duchy; Grand Duke Ferdinand II de' Medici, born in 1610, ruled the scientific scene in 17th-century Tuscany! Far from being just a patron, he was a hands-on scientist who passionately supported Galileo and founded the Accademia del Cimento, one of Europe's first experimental scientific academies. This Medici wasn't afraid to get his hands dirty, contributing to the development of early thermometers (the 'Florentine thermometer' was his invention!), hygrometers, and other instruments. He was a staunch advocate for empirical observation and experimentation, a key figure in shifting science away from pure philosophy towards practical investigation. His dedication to science truly illuminated Florence, making it a hub of innovation until his death in 1670.

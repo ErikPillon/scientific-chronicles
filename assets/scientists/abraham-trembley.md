@@ -11,7 +11,8 @@ disciplines:
   - "Biology"
 headline: "The Swiss naturalist famous for his pioneering experiments on the freshwater polyp Hydra, demonstrating its remarkable regenerative abilities."
 quote: ""
-image: "abraham-trembley.png"
+image: "abraham-trembley.jpg"
+image_credit: "Photo: User Magnus Manske on en.wikipedia via Wikimedia Commons"
 ---
 
 Meet Abraham Trembley, the 18th-century biologist who could cut an animal into pieces and watch it grow back! His groundbreaking experiments on the freshwater polyp *Hydra* were mind-blowing at the time. He showed that if you chop a *Hydra* in half, each half can regenerate into a complete organism. Cut it into even more pieces? Same result! He even turned them inside out to see if they'd still live (they did!). Trembley's work revolutionized our understanding of animal regeneration and plasticity, proving that some creatures are far more adaptable than anyone imagined. Talk about a creature feature!

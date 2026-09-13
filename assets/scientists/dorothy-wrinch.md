@@ -12,7 +12,8 @@ disciplines:
   - "Biophysics"
 headline: "The mathematician who tried to crack protein structure with pure geometry, decades before anyone had the tools to check her work."
 quote: ""
-image: "dorothy-wrinch.png"
+image: "dorothy-wrinch.jpg"
+image_credit: "Photo: Agence Rol via Wikimedia Commons"
 ---
 
 Long before anyone could actually see a protein's shape, Dorothy Wrinch decided she could work it out with mathematics alone. In the 1930s she proposed the 'cyclol' theory, arguing that proteins folded into elegant geometric cage-like structures. The idea caused a huge scientific fight, and later crystallography (courtesy of scientists like Dorothy Hodgkin) showed her specific model was wrong. But Wrinch had done something genuinely new: she treated biology as a problem you could attack with rigorous math, years before structural biology existed as a field. Trained at Cambridge under Bertrand Russell, she spent her career bouncing between mathematics, philosophy, and biology, refusing to stay in any one box. Being wrong about the details doesn't erase being right about the approach. 📐🧬

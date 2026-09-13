@@ -11,7 +11,8 @@ books:
   - author: Douglas R. Hofstadter
     title: "Gödel, Escher, Bach: An Eternal Golden Braid"
     link: https://amzn.to/48T5vCx
-image: escher.png
+image: "maurits-cornelis-escher.jpg"
+image_credit: "Photo: Hans Peters for Anefo via Wikimedia Commons"
 ---
 
 M.C. Escher was not a trained mathematician. In fact, he completely failed his high school math exams. Yet, his artwork is absolutely obsessed over by physicists and topologists to this day. 

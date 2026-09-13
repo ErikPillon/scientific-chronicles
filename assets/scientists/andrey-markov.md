@@ -12,7 +12,8 @@ books:
   - author: Brian Hayes
     title: "Infrastructures of Reality: The Math Behind the Matrix"
     link: https://amzn.to/3uYHG55
-image: andrey_markov_chalkboard.jpg
+image: "andrey-markov.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 If you love algorithms, probability, or literally any modern AI, you need to bow down to Andrey Markov. 

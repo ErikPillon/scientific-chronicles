@@ -8,12 +8,13 @@ death_date: 1922-05-26
 disciplines: Chemistry
 headline: The soda ash king who threw the smartest party in history.
 quote: "I have always been passionately fond of scientific research."
-image: ernest_solvay_graphic.jpg
+image: "ernest-solvay.jpg"
 books:
     - author: Manjit Kumar
       title: Einstein, Bohr, and the Great Debate About the Nature of Reality
       link: https://amzn.to/4fCOxDQ
       comment: 
+image_credit: "Photo: Unknown (Mondadori Publishers) via Wikimedia Commons"
 ---
 
 Ernest Solvay figured out a wildly efficient way to manufacture soda ash—a vital ingredient for making glass and soap. He patented the "Solvay process," built a global industrial empire, and suddenly had more money than he knew what to do with. 

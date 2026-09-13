@@ -10,7 +10,8 @@ disciplines:
     - "Military Strategy"
 headline: An archaeologist who threw away his trowel to blow up trains in the desert.
 quote: "All men dream, but not equally."
-image: te_lawrence_arabia.jpg
+image: "t-e-lawrence.jpg"
+image_credit: "Photo: Harris & Ewing via Wikimedia Commons"
 ---
 
 You probably know him as Lawrence of Arabia. He didn't start out as a military genius or a Hollywood legend; he was just an Oxford nerd studying old castles and digging up ruins in the Middle East. 🐪🗺️

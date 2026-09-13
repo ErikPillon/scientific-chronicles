@@ -13,7 +13,8 @@ disciplines:
   - "Science Policy"
 headline: "A Ukrainian-American physical chemist known for his work on explosives during the Manhattan Project and later as President Eisenhower's science advisor."
 quote: ""
-image: "george-b-kistiakowsky.png"
+image: "george-b-kistiakowsky.jpg"
+image_credit: "Photo: Los Alamos National Laboratory via Wikimedia Commons (Attribution)"
 ---
 
 George B. Kistiakowsky was the ultimate science-meets-power guy, starting his career figuring out how to make things go *boom* and ending it advising presidents. This Ukrainian-American physical chemist played a crucial role in the Manhattan Project, perfecting the implosion lens for the atomic bomb. Post-war, he traded his lab coat for policy, serving as President Eisenhower's science advisor and advocating for arms control. Kistiakowsky's journey from designing devastating explosives to promoting peace shows a remarkable evolution of scientific responsibility.

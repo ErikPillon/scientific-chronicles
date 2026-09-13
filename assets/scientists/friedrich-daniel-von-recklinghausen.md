@@ -11,7 +11,8 @@ disciplines:
   - "Anatomy"
 headline: "A pioneer in pathology, he meticulously described neurofibromatosis and distinguished it from other conditions, giving it the name 'von Recklinghausen's disease'."
 quote: ""
-image: "friedrich-daniel-von-recklinghausen.png"
+image: "friedrich-daniel-von-recklinghausen.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Meet Friedrich Daniel von Recklinghausen, the German pathologist who basically wrote the book on what was then a puzzling skin and nerve condition. In 1882, he gave us the definitive description of neurofibromatosis type 1, making sure everyone knew it was its own unique beast, not to be confused with elephantiasis or other lumpy situations. His careful observations and microscopic magic truly brought clarity to a complex disorder, leaving a lasting mark on medical understanding. Thanks to him, countless patients received a proper diagnosis, proving that sometimes, simply looking really, really closely changes everything.

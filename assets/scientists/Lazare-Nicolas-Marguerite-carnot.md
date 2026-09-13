@@ -8,7 +8,8 @@ death_date: 1823-08-02
 disciplines: Mathematics, Engineering, Military Strategy
 headline: The math geek who accidentally organized a revolution.
 quote: "In all things, it is necessary to go back to the origin."
-image: lazare_carnot_portrait.jpg
+image: "Lazare-Nicolas-Marguerite-carnot.jpg"
+image_credit: "Photo: Louis-Léopold Boilly via Wikimedia Commons"
 ---
 
 Lazare Carnot is what happens when you put a hardcore geometry nerd in charge of a crumbling military. During the French Revolution, the army was falling apart. They handed the mess to Carnot, who applied strict mathematical logic and engineering principles to troop movements, logistics, and fortifications. ⚔️📐

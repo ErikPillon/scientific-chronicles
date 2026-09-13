@@ -11,7 +11,8 @@ disciplines:
   - "Nutrition"
 headline: "The Australian biochemist who figured out how trace elements save livestock (and humans!)."
 quote: ""
-image: "hedley-ralph-marston.png"
+image: "hedley-ralph-marston.jpg"
+image_credit: "Photo: Archives, CSIRO via Wikimedia Commons (CC BY 3.0)"
 ---
 
 Hedley Marston was an Australian biochemist who became a hero to sheep farmers and, frankly, anyone who likes a decent steak. He's famous for his pioneering work on trace elements and their crucial role in animal and human nutrition. Marston's research, especially into the role of cobalt and copper, solved baffling 'wasting diseases' in sheep and cattle that plagued Australian agriculture. He proved that tiny amounts of these elements were absolutely vital for health, preventing massive economic losses and advancing our understanding of metabolism. So, next time you appreciate healthy livestock (or even your multi-vitamin), give a nod to Hedley, the guy who showed us that sometimes, the smallest things make the biggest difference.

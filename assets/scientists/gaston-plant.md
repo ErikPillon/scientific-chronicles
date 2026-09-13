@@ -12,7 +12,8 @@ disciplines:
   - "Invention"
 headline: "The French Physicist Who Gave Us the World's First Rechargeable Battery (You're Welcome, Car Owners)."
 quote: ""
-image: "gaston-plant.png"
+image: "gaston-plant.jpg"
+image_credit: "Photo: The original uploader was Kurzon at English Wikipedia . via Wikimedia Commons"
 ---
 
 Before Gaston Planté, batteries were one-and-done deals. But this brilliant French physicist, with a flash of insight in 1859, changed everything. He painstakingly created the very first lead-acid battery, a device that didn't just generate electricity but could be recharged again and again! Imagine the sheer genius of realizing you could reverse an electrochemical reaction to store energy for later. This wasn't just a clever parlor trick; it was a fundamental breakthrough that made things like electric cars (yes, even back then!), reliable laboratory power, and eventually, the ubiquitous car battery possible. Without Planté's innovative work, our modern electrified world would literally run out of juice. He truly powered the future.

@@ -12,7 +12,8 @@ disciplines:
   - "Invention"
 headline: "A prolific African-American inventor known for his numerous patents in railway and electrical systems, including the induction telegraph."
 quote: ""
-image: "granville-t-woods.png"
+image: "granville-t-woods.jpg"
+image_credit: "Photo: William J. Simmons via Wikimedia Commons"
 ---
 
 Meet Granville T. Woods, the self-taught electrical engineering marvel often dubbed the 'Black Edison'! Born in 1856, Woods was a prolific American inventor who accumulated over 50 patents. His genius primarily focused on improving railway and electrical systems. His most famous invention, the 'Synchronous Multiplex Railway Telegraph' (or induction telegraph), allowed moving trains to communicate with stations and each other, dramatically improving safety and efficiency on the railways. This was a game-changer long before radio. Despite facing significant racial prejudice, Woods consistently innovated, creating everything from power pick-ups for electric cars to automatic circuit breakers. He revolutionized transport and communication until his death in 1910, proving that brilliance knows no bounds.

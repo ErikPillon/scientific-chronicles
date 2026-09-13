@@ -13,7 +13,8 @@ disciplines:
   - "Medicine"
 headline: "The first American woman to win a Nobel Prize in science, co-discovering the 'Cori cycle' of carbohydrate metabolism."
 quote: ""
-image: "gerty-cori.png"
+image: "gerty-cori.jpg"
+image_credit: "Photo: National Library of Medicine, Images from the History of Medicine, B05353 via Wikimedia Commons"
 ---
 
 Born in Prague, Gerty Cori defied early 20th-century skepticism about women in science. Alongside her husband, Carl, she delved into the intricate world of how our bodies process sugars. Their pioneering work on glycogen metabolism, specifically the 'Cori cycle,' illuminated how glucose is recycled between muscles and the liver. This wasn't just groundbreaking biochemistry; it earned them a Nobel Prize in Physiology or Medicine in 1947, making Gerty the first American woman to snag such an honor in science. A true trailblazer, she shattered glass ceilings while unraveling the mysteries of energy conversion, proving that a sharp mind and relentless curiosity are all you need to change the scientific game.

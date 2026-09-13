@@ -10,7 +10,8 @@ disciplines:
     - "Immunology"
 headline: The doctor who cured the world's deadliest disease using cow pus.
 quote: "I hope that some day the practice of producing cowpox in human beings will spread over the world."
-image: edward_jenner_vaccine.jpg
+image: "edward-jenner.jpg"
+image_credit: "Photo: John Raphael Smith via Wikimedia Commons"
 ---
 
 Smallpox used to be a terrifying, global nightmare. Then came Edward Jenner, a country doctor who noticed something weird: milkmaids never caught smallpox. They did, however, catch a mild, annoying version from cows called "cowpox." 🐄💉

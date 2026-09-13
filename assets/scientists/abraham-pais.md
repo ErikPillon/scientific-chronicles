@@ -10,7 +10,8 @@ disciplines:
     - "History of Science"
 headline: The particle physicist who took walks with Einstein and mapped the subatomic world.
 quote: "Physics is not about what the world is. Physics is about what we can say about the world."
-image: abraham_pais_desk.jpg
+image: "abraham-pais.jpg"
+image_credit: "Photo: Koninklijke Nederlandse Akademie van Wetenschappen, Amsterdam via Wikimedia Commons"
 ---
 
 In the middle of the 20th century, physicists were smashing atoms together and finding all sorts of weird new particles. It was a mess. Abraham Pais stepped in and brought some much-needed order to the chaos. ⚛️🔬

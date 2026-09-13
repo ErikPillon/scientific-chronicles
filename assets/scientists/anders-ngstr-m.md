@@ -8,7 +8,8 @@ death_date: 1874-06-21
 disciplines: [Physics, Spectroscopy]
 headline: The physicist who mapped the sun and got a really tiny unit named after him.
 books: []
-image: anders-angstrom.png
+image: "anders-ngstr-m.jpg"
+image_credit: "Photo: Uppsala University via Wikimedia Commons"
 ---
 
 How do you figure out what the Sun is made of without actually going there? You ask Anders Ångström. 

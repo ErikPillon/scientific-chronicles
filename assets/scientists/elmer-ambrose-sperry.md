@@ -12,7 +12,8 @@ disciplines:
   - "Navigation"
 headline: "A prolific inventor known as the 'Father of Modern Navigation,' he developed gyroscopic compasses and crucial naval technologies."
 quote: ""
-image: "elmer-ambrose-sperry.png"
+image: "elmer-ambrose-sperry.jpg"
+image_credit: "Photo: Wilson, James Grant, 1832-1914; Fiske, John, 1842-1901; Dick, Charles, 1858-; Ho via Wikimedia Commons"
 ---
 
 Elmer Sperry was a mechanical and electrical wizard, often dubbed the 'Father of Modern Navigation,' and for good reason! This brilliant American inventor held over 400 patents and basically spent his life making things move better, especially ships and planes. His big claim to fame was the development of the gyroscopic compass, which allowed ships to maintain a true course without relying on finicky magnetic north. This wasn't just a nifty gadget; it was a game-changer for naval warfare and commercial shipping, making navigation safer and more accurate. Beyond the compass, he invented arc lights, electric automobiles, and even early automatic flight control systems. Sperry was a true visionary, always tinkering and innovating, making sure humanity had its bearings, whether on land, sea, or in the air.

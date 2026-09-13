@@ -8,7 +8,8 @@ death_date: 1948-06-06
 disciplines: Engineering, Filmmaking
 headline: The brother who accidentally invented the movie theater.
 quote: "The cinema is an invention without any future."
-image: louis_lumiere_cinematograph.jpg
+image: "louis-lumiere.jpg"
+image_credit: "Photo: Not credited; presumably a Frères Lumière photo via Wikimedia Commons"
 ---
 
 Imagine inventing the film industry and then confidently declaring it was just a passing fad. 

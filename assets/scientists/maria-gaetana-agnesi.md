@@ -10,7 +10,8 @@ disciplines:
     - "Philosophy"
 headline: The math prodigy who wrote the ultimate textbook and then gave it all up for charity.
 quote: "Intelligence is the faculty by which we comprehend the things that are."
-image: maria-agnesi.png
+image: "maria-gaetana-agnesi.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Maria was a terrifyingly smart kid. By age 11, she was fluent in seven languages. By her twenties, she wrote *Instituzioni analitiche*, a massive, incredibly clear textbook that brought together algebra, calculus, and geometry. It was so good that the Pope appointed her as a mathematics professor at the University of Bologna—making her the first woman to hold such a title. 📚🔢

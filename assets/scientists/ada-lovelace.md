@@ -10,7 +10,8 @@ disciplines:
     - "Computing"
 headline: The Enchantress of Number who saw the future of coding.
 quote: "That brain of mine is something more than merely mortal; as time will show."
-image: ada-lovelace.png
+image: "ada-lovelace.jpg"
+image_credit: "Photo: Antoine Claudet via Wikimedia Commons"
 ---
 
 Imagine being Lord Byron's kid, but instead of writing angsty poetry, you invent computer programming. Oh, and you do it over a century before the first actual computer was even built. 🤯

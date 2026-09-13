@@ -11,7 +11,8 @@ disciplines:
   - "Soil Physics"
 headline: "An American agricultural scientist and pioneer in soil physics, known for his groundbreaking work on sustainable agriculture and East Asian farming practices."
 quote: ""
-image: "franklin-hiram-king.png"
+image: "franklin-hiram-king.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Franklin Hiram King was an agricultural visionary who was way ahead of his time in thinking about sustainable farming. This American scientist made huge strides in soil physics, exploring how water moves through soil and its impact on crop yields. But his real mic drop moment came after a journey to Asia, documented in his influential book 'Farmers of Forty Centuries.' He was blown away by the ancient, incredibly efficient farming practices he observed there—think intensive cultivation, composting, and nutrient recycling. King essentially brought the concept of long-term sustainable agriculture to the Western world decades before 'sustainability' became a buzzword. He proved that sometimes, the oldest methods are the wisest when it comes to feeding the planet, inspiring a new generation of eco-conscious farmers.

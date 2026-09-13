@@ -11,7 +11,8 @@ books:
   - author: Roland Huntford
     title: "The Last Place on Earth: Scott and Amundsen's Race to the South Pole"
     link: https://amzn.to/3wB3xYz
-image: "roald-amundsen.png"
+image: "roald-amundsen.jpg"
+image_credit: "Photo: Anonymous Unknown author via Wikimedia Commons"
 ---
 
 Roald Amundsen did not care about being a romantic hero; he only cared about winning. 

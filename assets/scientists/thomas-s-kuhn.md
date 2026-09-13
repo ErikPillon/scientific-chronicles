@@ -11,7 +11,8 @@ books:
   - author: Thomas S. Kuhn
     title: "The Structure of Scientific Revolutions"
     link: https://amzn.to/439pLm1
-image: thomas_kuhn_books.jpg
+image: "thomas-s-kuhn.jpg"
+image_credit: "Photo: Bob Bielk via Wikimedia Commons"
 ---
 
 We like to think of science as a smooth, logical staircase where smart people just keep adding new facts until we understand the universe. Thomas Kuhn completely ruined that comforting illusion. 

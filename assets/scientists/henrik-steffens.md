@@ -14,7 +14,8 @@ disciplines:
   - "Mineralogy"
 headline: "A Norwegian-Danish philosopher, naturalist, and romanticist whose lectures introduced German Idealism to Denmark and helped found the German Romantic school of thought."
 quote: ""
-image: "henrik-steffens.png"
+image: "henrik-steffens.jpg"
+image_credit: "Photo: Lithograph by Franz Krüger after Friedrich Jentzen via Wikimedia Commons (CC BY 4.0)"
 ---
 
 Henrik Steffens was a bit of a scientific and philosophical nomad, born in Norway, educated in Denmark, and making a huge splash in Germany. He was a key figure in German Romanticism, blending natural science with philosophy in a truly unique way. His lectures, delivered with a dramatic flair, captivated audiences and introduced German Idealism to Scandinavia, essentially sparking a new intellectual era. He was the kind of thinker who saw the interconnectedness of all things, pushing boundaries between disciplines and reminding everyone that science isn't just about facts, but about grand narratives too.

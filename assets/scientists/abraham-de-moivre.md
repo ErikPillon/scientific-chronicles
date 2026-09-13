@@ -8,12 +8,13 @@ death_date: 1754-11-27
 disciplines: Mathematics
 headline: The math genius who literally predicted the exact day of his own death.
 quote: "Go to Mr. de Moivre; he knows these things better than I do. — Isaac Newton"
-image: abraham_demoivre_cel_shaded.jpg
+image: "abraham-de-moivre.jpg"
 books:
     - author: Peter Bernstein
       title: "Against the Gods: The Remarkable Story of Risk"
       link: https://amzn.to/4nKhfFc
       comment: "An absolute favourite of mine; a page turner!"
+image_credit: "Photo: Joseph Highmore via Wikimedia Commons"
 ---
 
 It’s one thing to be good at math. It’s another thing entirely when Isaac Newton tells people to go ask *you* for help. 

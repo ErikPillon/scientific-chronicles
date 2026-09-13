@@ -11,7 +11,8 @@ disciplines:
   - "Neuropathology"
 headline: "The German psychiatrist and neuropathologist who first identified the neurological condition that now bears his name."
 quote: ""
-image: "alois-alzheimer.png"
+image: "alois-alzheimer.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Alois Alzheimer wasn't just another doctor; he was the man who put a name to one of humanity's most devastating diseases. This German psychiatrist made history in 1906 when he presented the case of Auguste Deter, a patient with profound memory loss, language problems, and disorientation. After her death, his meticulous post-mortem examination of her brain revealed the distinctive plaques and tangles that are now the hallmarks of what we call Alzheimer's disease. His pioneering work provided the first clear pathological description of this neurodegenerative disorder, laying the foundation for all future research and our quest for a cure. Talk about leaving a lasting (and sadly, omnipresent) legacy!

@@ -12,7 +12,8 @@ disciplines:
   - "Evolutionary Biology"
 headline: "Revolutionary American microbiologist who defined the Archaea as a new domain of life, fundamentally altering our understanding of evolutionary biology."
 quote: ""
-image: "carl-richard-woese.png"
+image: "carl-richard-woese.jpg"
+image_credit: "Photo: Don Hamerman via Wikimedia Commons (CC BY 3.0)"
 ---
 
 Before Carl Woese came along, life was neatly divided into two empires: prokaryotes (simple cells like bacteria) and eukaryotes (complex cells like us). Then, in 1977, this American microbiologist dropped a bombshell! By meticulously analyzing ribosomal RNA, Woese discovered a third, entirely distinct branch of life: the Archaea. It was like finding a whole new continent on Earth! This wasn't just a minor tweak; it fundamentally reshaped the tree of life into three domains – Bacteria, Archaea, and Eukarya – completely rewriting textbooks and our understanding of evolutionary history. Woese's work showed that some of the earliest forms of life were far more diverse than previously imagined, thriving in extreme environments. His molecular approach to phylogeny changed how scientists classify organisms and trace the origins of life, proving that even the tiniest organisms can hold the biggest evolutionary secrets.

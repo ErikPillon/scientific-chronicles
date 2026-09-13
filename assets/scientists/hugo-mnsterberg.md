@@ -12,7 +12,8 @@ disciplines:
   - "Applied Psychology"
 headline: "Pioneer of applied psychology, extending the field into areas like industrial, legal, and clinical psychology."
 quote: ""
-image: "hugo-mnsterberg.png"
+image: "hugo-mnsterberg.jpg"
+image_credit: "Photo: not stated via Wikimedia Commons"
 ---
 
 Hugo Münsterberg was the OG in applying psychology to... well, everything! This German-American pioneer wasn't content with just pondering the mind in an ivory tower. Oh no, he wanted to put psychology to work in the real world. He's considered a founder of applied psychology, diving headfirst into fields like industrial psychology (how to make workers happy and productive), legal psychology (how to get reliable testimony), and even clinical psychology. He was a prolific writer and a bit of a celebrity in his time, making psychology relevant to everyday life. Imagine being the guy who thought, 'Hey, maybe psychology can help us pick better jury members or design more efficient factories!' A true trailblazer who brought the science of the mind out of the lab and into society.

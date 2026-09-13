@@ -10,7 +10,8 @@ disciplines:
     - "Mechanics"
 headline: The Russian numbers wizard who made machines walk.
 quote: "To isolate mathematics from the practical demands of the sciences is to invite the sterility of a cow kept away from the bull."
-image: chebyshev.png
+image: "pafnuty-lvovich-chebyshev.jpg"
+image_credit: "Photo: Atelier Nadar. Photographe via Wikimedia Commons"
 ---
 
 If you've ever taken a statistics class and survived, you probably know the name Chebyshev. This guy was a powerhouse in probability theory and prime numbers. But Pafnuty wasn't just sitting in a dusty room doing abstract algebra—he loved getting his hands dirty. ⚙️📐

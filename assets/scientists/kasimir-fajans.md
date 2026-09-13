@@ -8,7 +8,8 @@ death_date: 1975-05-18
 disciplines: Physical Chemistry
 headline: The radioactivity pioneer who got robbed of a Nobel Prize by the press.
 quote: "The chemical properties of the elements are a periodic function of their atomic number."
-image: kasimir_fajans_atoms.jpg
+image: "kasimir-fajans.jpg"
+image_credit: "Photo: NN (University of Michigan) via Wikimedia Commons"
 ---
 
 If you ever feel unlucky, just think about Kasimir Fajans. This brilliant physical chemist was doing groundbreaking work in the early 1900s. He discovered the chemical rules of radioactive decay and even found a brand-new element: protactinium. 

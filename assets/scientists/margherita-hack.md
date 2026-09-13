@@ -12,7 +12,8 @@ books:
   - author: Margherita Hack
     title: "Notte di stelle (Starry Night)"
     link: https://amzn.to/3I1abc9
-image: margherita_hack_telescope.jpg
+image: "margherita-hack.jpg"
+image_credit: "Photo: Gianmaria Zanotti via Wikimedia Commons (CC BY 2.0)"
 ---
 
 Margherita Hack was an absolute force of nature. Known across Italy as the "Lady of the Stars," she was a brilliant astrophysicist who spent her life analyzing the spectral signatures of distant stars to figure out exactly what they were made of. 

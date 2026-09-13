@@ -12,7 +12,8 @@ disciplines:
   - "Oriental Studies"
 headline: "A groundbreaking French Assyriologist who deciphered ancient Near Eastern languages and cultures."
 quote: ""
-image: "franois-lenormant.png"
+image: "franois-lenormant.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Before Indiana Jones made ancient ruins cool, there was François Lenormant, rocking the academic world in the 19th century. This French powerhouse wasn't just digging up dirt; he was deciphering ancient scripts, especially cuneiform, like it was yesterday's newspaper. He plunged headfirst into the mysteries of Assyriology and the origins of biblical narratives, basically laying down the foundation for understanding civilizations that had been buried for millennia. Talk about a history buff with serious skills!

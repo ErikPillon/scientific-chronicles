@@ -11,7 +11,8 @@ disciplines:
   - "Transport"
 headline: "An English coachbuilder who introduced the omnibus to London, revolutionizing urban public transport."
 quote: ""
-image: "george-shillibeer.png"
+image: "george-shillibeer.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Tired of walking everywhere in a bustling 19th-century city? So was George Shillibeer! This ingenious English coachbuilder, after seeing a successful horse-drawn omnibus system in Paris, decided to bring the concept to London. In 1829, his first 'Shillibeer's Original Omnibus' rolled through the streets, capable of carrying 22 passengers. No more muddy trudging or expensive private carriages for everyone! He basically invented affordable, mass urban transport for Londoners, paving the way for buses, trams, and tube lines. While he might not have been a 'scientist' in the traditional sense, his practical innovation had a massive societal and engineering impact, changing how cities moved forever. Talk about a transport pioneer!

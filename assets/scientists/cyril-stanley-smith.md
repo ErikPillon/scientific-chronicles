@@ -13,7 +13,8 @@ disciplines:
   - "Materials Science"
 headline: "From atomic bombs to ancient artifacts, this metallurgist and historian revealed the hidden beauty and structure of materials."
 quote: ""
-image: "cyril-stanley-smith.png"
+image: "cyril-stanley-smith.jpg"
+image_credit: "Photo: Los Alamos Laboratory. LAT 751 (See Hoddeson et al, Critical Assembly , p. 212) via Wikimedia Commons"
 ---
 
 Cyril Stanley Smith, born in Britain in 1903, was a metallurgist who could tell you more about the inner life of metals than most people know about their own families. He played a crucial role in the Manhattan Project, helping to understand the behavior of uranium and plutonium. But his mind wasn't just on destruction; he was also deeply fascinated by the history of materials, seeing beauty and scientific insight in ancient swords and pottery. Smith argued that aesthetic considerations often drove technological innovation long before formal science did, believing that looking closely at objects could tell a story of human ingenuity. He essentially showed us that materials science isn't just about strength and conductivity, but also about art, history, and the subtle relationships between structure and function.

@@ -12,7 +12,8 @@ disciplines:
   - "Medicine"
 headline: "Nobel laureate who revolutionized drug development by pioneering a rational approach to chemotherapy, leading to treatments for various diseases."
 quote: ""
-image: "george-herbert-hitchings.png"
+image: "george-herbert-hitchings.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons (CC BY 4.0)"
 ---
 
 George Herbert Hitchings was a true lifesaver, earning a Nobel Prize for his revolutionary "rational drug design." Instead of blindly testing chemicals, he and his colleague Gertrude Elion figured out how to target specific biochemical pathways in disease-causing cells or pathogens, leaving healthy cells untouched. This ingenious approach led to breakthrough medications for leukemia, malaria, gout, and even organ transplant rejection, turning deadly conditions into manageable ones. Hitchings showed that understanding the enemy at a molecular level is the key to winning the battle against disease, proving that smart science can literally change the world for the better and extend millions of lives.

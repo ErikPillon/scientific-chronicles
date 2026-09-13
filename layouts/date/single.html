@@ -188,8 +188,13 @@
                         {{ if .image }}
                           {{ $img := resources.Get (printf "images/%s" .image) }}
                           {{ if $img }}
+                            {{ $thumb := $img }}
+                            {{ if eq $img.ResourceType "image" }}
+                              {{ $thumb = $img.Fill "288x288 Center q82" }}
+                            {{ end }}
                             <div class="person-avatar">
-                              <img src="{{ $img.RelPermalink }}" alt="Portrait of {{ .name }}" loading="lazy">
+                              <img src="{{ $thumb.RelPermalink }}" width="144" height="144"
+                                   alt="Portrait of {{ .name }}" loading="lazy" decoding="async">
                             </div>
                           {{ end }}
                         {{ end }}
@@ -263,8 +268,13 @@
                         {{ if .image }}
                           {{ $img := resources.Get (printf "images/%s" .image) }}
                           {{ if $img }}
+                            {{ $thumb := $img }}
+                            {{ if eq $img.ResourceType "image" }}
+                              {{ $thumb = $img.Fill "288x288 Center q82" }}
+                            {{ end }}
                             <div class="person-avatar">
-                              <img src="{{ $img.RelPermalink }}" alt="Illustration for {{ .title }}" loading="lazy">
+                              <img src="{{ $thumb.RelPermalink }}" width="144" height="144"
+                                   alt="Illustration for {{ .title }}" loading="lazy" decoding="async">
                             </div>
                           {{ end }}
                         {{ end }}

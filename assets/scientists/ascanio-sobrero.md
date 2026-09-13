@@ -8,7 +8,8 @@ death_date: 1888-05-26
 disciplines: Chemistry
 headline: He invented the most dangerous explosive on earth, then spent his life regretting it.
 quote: "I am almost ashamed to admit to be its discoverer."
-image: ascanio_sobrero_laboratory.jpg
+image: "ascanio-sobrero.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Ascanio Sobrero had a really bad day in the lab. In 1847, this Italian chemist synthesized a new compound: nitroglycerin. He quickly found out it was so violently unstable that even tapping it slightly would cause a massive explosion. In fact, a tiny drop blew up right in his face, leaving him permanently scarred. 

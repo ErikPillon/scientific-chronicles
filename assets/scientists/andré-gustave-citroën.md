@@ -12,7 +12,8 @@ books:
   - author: John Reynolds
     title: "André Citroën: The Man and the Motor Cars"
     link: https://amzn.to/3I5Lxyz
-image: andre_citroen_eiffel_tower.jpg
+image: "andré-gustave-citroën.jpg"
+image_credit: "Photo: Bain News Service via Wikimedia Commons"
 ---
 
 Henry Ford gets all the credit for mass-producing cars, but André-Gustave Citroën was the guy who brought the concept to Europe and made it cool. 

@@ -8,7 +8,8 @@ death_date: 1891-05-11
 disciplines: Physics, Chemistry
 headline: The teenager who accidentally discovered solar power.
 quote: "Light, that mysterious agent, the nature of which is still unknown to us."
-image: edmond_becquerel_lab.jpg
+image: "alexandre-edmond-becquerel.jpg"
+image_credit: "Photo: Nadar via Wikimedia Commons"
 ---
 
 Imagine being 19 years old, messing around in your dad's laboratory, and accidentally discovering how to power the future. That was Alexandre Edmond Becquerel in 1839. ☀️🔋

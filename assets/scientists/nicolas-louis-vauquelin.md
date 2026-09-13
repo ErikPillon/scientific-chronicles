@@ -8,7 +8,8 @@ death_date: "1829-11-14"
 disciplines: "Chemistry"
 headline: The farm boy who found the elements that make your car shiny and your emeralds green.
 quote: "Nature is an endless combination of elements waiting to be untangled."
-image: vauquelin_chemistry.jpg
+image: "nicolas-louis-vauquelin.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Nicolas-Louis Vauquelin started out as a poor farm kid who just wanted to learn. He managed to snag a job as a lab assistant in Paris, and boy, did he make it count. 🧪💎

@@ -12,7 +12,8 @@ disciplines:
   - "Submarine Rescue"
 headline: "A U.S. Navy pioneer whose innovations in diving and submarine rescue saved countless lives."
 quote: ""
-image: "charles-bowers-momsen.png"
+image: "charles-bowers-momsen.jpg"
+image_credit: "Photo: Unknown via Wikimedia Commons"
 ---
 
 Charles B. Momsen, or "Swede" to his comrades, was a U.S. Navy officer who literally brought people back from the deep. Frustrated by the tragic losses of submariners, he invented the Momsen Lung in the 1920s – a rebreather device that allowed sailors to escape sunken submarines. He also developed the McCann Rescue Chamber, a major improvement for deep-sea recovery operations. His relentless drive to improve diving and rescue methods made him a genuine hero of the depths, proving that even the most desperate situations can be overcome with a bit of ingenuity and a whole lot of grit.

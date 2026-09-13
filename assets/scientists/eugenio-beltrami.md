@@ -12,7 +12,8 @@ disciplines:
   - "Non-Euclidean Geometry"
 headline: "A mathematician who made significant contributions to differential geometry, particularly in the study of non-Euclidean geometries."
 quote: ""
-image: "eugenio-beltrami.png"
+image: "eugenio-beltrami.jpg"
+image_credit: "Photo: Unknown via Wikimedia Commons"
 ---
 
 Ever tried to wrap your head around geometry that *isn't* flat? Say hello to Eugenio Beltrami, the 19th-century Italian mathematician who absolutely crushed it in differential geometry. While Euclid was all about straight lines on a flat plane, Beltrami got deep into curved spaces, showing how non-Euclidean geometries (like hyperbolic geometry) could be perfectly consistent. Think of it as proving that you can draw triangles where angles don't add up to 180 degrees, just not on a dinner plate! His work laid crucial groundwork for things like Einstein's general relativity. He helped us see that geometry isn't just about what we *see*, but what we *can imagine*.

@@ -12,7 +12,8 @@ disciplines:
   - "Art"
 headline: "A German painter and engraver who pioneered three- and four-color printing, revolutionizing color reproduction."
 quote: ""
-image: "jakob-christof-le-blon.png"
+image: "jakob-christof-le-blon.jpg"
+image_credit: "Photo: Jacob Christoph Le Blon / After Nicholas Blakey via Wikimedia Commons"
 ---
 
 Meet Jakob Christof Le Blon, the color wizard who practically invented modern color printing! Back in the early 1700s, when printing was mostly black and white (or painstakingly hand-colored), Le Blon figured out how to use just three primary colors – red, yellow, and blue – to create a full spectrum. He even dabbled with a fourth, black, for extra depth. Using mezzotint engraving, he laid the groundwork for the CMYK process we still use today. Imagine trying to explain color separation to people who barely understood the concept! He literally gave the world a vibrant new palette, changing art and commerce forever. Talk about a colorful character!

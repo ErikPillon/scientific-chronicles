@@ -12,7 +12,8 @@ disciplines:
   - "Paleobotany"
 headline: "This Canadian-American botanist meticulously studied plant anatomy and evolution, digging deep into the fossil record to understand ancient flora."
 quote: ""
-image: "edward-charles-jeffrey.png"
+image: "edward-charles-jeffrey.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Edward C. Jeffrey was the kind of botanist who didn't just admire pretty flowers; he wanted to know how they *worked* and where they came from. Born in Canada and later a long-serving professor at Harvard, Jeffrey was a master of plant anatomy, dissecting and examining the internal structures of plants with intense scrutiny. But he didn't stop at living plants; he was also a pioneering paleobotanist, poring over fossilized plant remains to piece together the evolutionary history of flora. Imagine trying to reconstruct ancient forests from bits of petrified wood! His work was crucial in understanding the vascular systems of plants and how different groups evolved. He helped cement the idea that studying ancient life forms is absolutely essential to understanding the biodiversity we see today. Jeffrey was truly a botanist with a keen eye for both the microscopic and the prehistoric!

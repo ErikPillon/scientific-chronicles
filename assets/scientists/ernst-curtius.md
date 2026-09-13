@@ -12,7 +12,8 @@ disciplines:
   - "Philology"
 headline: "A classical archaeologist and historian who brought ancient Greece back to life through his extensive excavations."
 quote: ""
-image: "ernst-curtius.png"
+image: "ernst-curtius.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Meet Ernst Curtius, the German classical archaeologist who basically ghost-hunted for ancient civilizations and actually found them! Born in 1814, Curtius became famous for his pioneering work on the excavation of Olympia, the site of the ancient Olympic Games. He didn't just dig up old stuff; he resurrected an entire world, providing incredible insights into Greek art, architecture, and daily life. Think of him as the original Indiana Jones, but with more shovels and less whip-cracking. His passion for the past profoundly shaped how we understand classical antiquity, making him a true legend in the dusty, exciting world of archaeology.

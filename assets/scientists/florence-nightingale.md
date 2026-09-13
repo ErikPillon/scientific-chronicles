@@ -10,7 +10,8 @@ disciplines:
     - "Statistics"
 headline: The data nerd who saved thousands of lives with a pie chart.
 quote: "I attribute my success to this: I never gave or took any excuse."
-image: florence_nightingale_lamp.jpg
+image: "florence-nightingale.jpg"
+image_credit: "Photo: Henry Hering (1814-1893) via Wikimedia Commons"
 ---
 
 Everyone knows Florence Nightingale as the "Lady with the Lamp" who pioneered modern nursing during the Crimean War. But here is the really cool part: she was an absolute savage with statistics. 📊🏥

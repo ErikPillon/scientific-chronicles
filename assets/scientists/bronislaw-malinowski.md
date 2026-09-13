@@ -12,7 +12,8 @@ disciplines:
   - "Ethnography"
 headline: "The godfather of modern ethnography who transformed how we understand human cultures through immersive fieldwork."
 quote: "Anthropology is the most far-reaching study of humanity, a science that combines the natural, historical, and philosophical dimensions of man."
-image: "bronislaw-malinowski.png"
+image: "bronislaw-malinowski.jpg"
+image_credit: "Photo: Unknown via Wikimedia Commons"
 ---
 
 Meet Bronislaw Malinowski, the Polish-born anthropologist who didn't just study cultures; he *lived* them. Trapped in the Trobriand Islands during WWI, he turned lemons into groundbreaking ethnographic lemonade, pioneering participant observation – essentially, becoming one with the locals to truly understand their world. Forget armchair anthropology; Malinowski was all about getting down and dirty with daily life, learning languages, and immersing himself in rituals and customs. His work, especially 'Argonauts of the Western Pacific,' revolutionized anthropology, showing that culture wasn't just a collection of oddities but a complex, functional system. He taught us that to understand people, you have to walk a mile in their sandals, even if those sandals are really just bare feet on a tropical island!

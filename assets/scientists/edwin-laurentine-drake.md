@@ -11,7 +11,8 @@ disciplines:
   - "Geology"
 headline: "Often credited with drilling the first successful oil well in the United States, sparking the modern petroleum industry."
 quote: ""
-image: "edwin-laurentine-drake.png"
+image: "edwin-laurentine-drake.jpg"
+image_credit: "Photo: Unknown author via Wikimedia Commons"
 ---
 
 Edwin Laurentine Drake wasn't a scientist in the traditional sense, but he was a true visionary who literally tapped into a new era. In 1859, this American "Colonel" (a courtesy title, mind you) drilled the first successful oil well in Titusville, Pennsylvania. Before Drake, oil was mostly skimmed from ponds or found in seeps; after him, a new industry boomed! His innovative drilling techniques, like using a drive pipe, paved the way for efficient oil extraction, fueling everything from lamps to eventually, cars. He kick-started the entire petroleum industry, making him the accidental godfather of oil. Talk about striking it rich for humanity!
