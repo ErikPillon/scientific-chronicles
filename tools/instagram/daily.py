@@ -33,6 +33,8 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--again", action="store_true",
                         help="offer again even if this day was already offered")
+    parser.add_argument("--replace", action="store_true",
+                        help="withdraw a previous offer for this day and redo it")
     args = parser.parse_args()
 
     target = (date.fromisoformat(args.date) if args.date
@@ -40,6 +42,24 @@ def main() -> int:
     conn = store.connect()
 
     already = store.offered_for(conn, target)
+
+    if args.replace and already:
+        published = [r for r in already if r["status"] == "published"]
+        if published:
+            print(f"refusing --replace: {len(published)} post(s) for {target} "
+                  f"are already published", file=sys.stderr)
+            return 1
+        removed = 0
+        for row in already:
+            if row["tg_message_id"] and telegram.delete_message(row["tg_message_id"]):
+                removed += 1
+            conn.execute("DELETE FROM posts WHERE id = ?", (row["id"],))
+        conn.commit()
+        print(f"withdrew {len(already)} previous offer(s), "
+              f"{removed} Telegram message(s) deleted")
+        already = []
+        args.again = True
+
     if already and not args.again:
         live = [r for r in already if r["status"] in ("pending", "approved", "published")]
         print(f"{target} already offered: {len(already)} candidates, "

@@ -7,6 +7,7 @@ Two treatments, sharing one type system so the feed looks consistent:
 from __future__ import annotations
 
 import os
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -307,11 +308,15 @@ def _inset(img: Image.Image, photo: Image.Image) -> None:
 
 def _load_photo(path: str) -> tuple[Image.Image, str, tuple | None] | None:
     """Open an image and decide which treatment suits it."""
+    if not os.path.isfile(path):
+        print(f"render: image not found, falling back to a card: {path}", file=sys.stderr)
+        return None
     try:
         with Image.open(path) as src:
             src.load()
             photo = src.convert("RGB")
-    except Exception:
+    except Exception as exc:
+        print(f"render: cannot read {path} ({exc}); falling back to a card", file=sys.stderr)
         return None
     if photo.width < MIN_PHOTO_WIDTH:
         return None                                  # too small; card reads better

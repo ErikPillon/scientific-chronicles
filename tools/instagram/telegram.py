@@ -98,6 +98,15 @@ def _chunks(text: str):
         text = text[MESSAGE_LIMIT:]
 
 
+def delete_message(message_id: int) -> bool:
+    """Remove a previously sent message. Telegram allows this for 48h."""
+    try:
+        call("deleteMessage", chat_id=chat_id(), message_id=message_id)
+        return True
+    except Exception:
+        return False
+
+
 def notify(text: str) -> None:
     try:
         call("sendMessage", chat_id=chat_id(), text=text,

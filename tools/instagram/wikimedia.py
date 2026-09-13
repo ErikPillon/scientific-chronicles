@@ -211,7 +211,12 @@ def cached(key: str) -> Portrait | None | str:
         return "miss"
     if not image.is_file():
         return None
-    return Portrait(**record["portrait"])
+    portrait = Portrait(**record["portrait"])
+    # The sidecar records the absolute path of whichever machine fetched it.
+    # A cache synced to another host would otherwise hand back a path that
+    # does not exist there, and the render would silently fall back to a card.
+    portrait.path = str(image)
+    return portrait
 
 
 def fetch(name: str, *, surname: str = "", birth_year: int | None = None,
