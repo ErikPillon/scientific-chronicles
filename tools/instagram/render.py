@@ -271,9 +271,12 @@ def _scrim(img: Image.Image, start: float = 0.30) -> None:
     img.paste(overlay, (0, 0), mask.resize((W, H)))
 
 
-# A photo must be big enough that upscaling to feed width still looks clean,
-# and portrait enough that a 4:5 crop does not decapitate it.
+# Full bleed stretches the image across all 1080px, so it needs real
+# resolution. The fit-blur band is at most 928x660, where a 550px portrait
+# is actually downscaled — so a smaller image is fine there and only
+# unusable below MIN_INSET_WIDTH.
 MIN_PHOTO_WIDTH = 700
+MIN_INSET_WIDTH = 450
 PORTRAIT_RATIO = 0.95
 
 INSET_TOP = 150
@@ -318,10 +321,13 @@ def _load_photo(path: str) -> tuple[Image.Image, str, tuple | None] | None:
     except Exception as exc:
         print(f"render: cannot read {path} ({exc}); falling back to a card", file=sys.stderr)
         return None
-    if photo.width < MIN_PHOTO_WIDTH:
-        return None                                  # too small; card reads better
+    if photo.width < MIN_INSET_WIDTH:
+        return None                                  # too small for anything
     if photo.height / photo.width < PORTRAIT_RATIO:
         return photo, "inset", None                  # too wide to crop safely
+    if photo.width < MIN_PHOTO_WIDTH:
+        # Enough for the fit-blur band, not enough to stretch full bleed.
+        return photo, "fitblur", face_box(photo)
 
     face = face_box(photo)
     if face and face[3] >= photo.height * TIGHT_FACE_FRACTION:
