@@ -78,14 +78,45 @@ def publish_one(conn, post) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--id", type=int, action="append", dest="ids", metavar="N",
+                        help="publish exactly this post now, whatever its schedule "
+                             "(repeatable). Prefer this over --force.")
     parser.add_argument("--force", action="store_true",
-                        help="ignore the scheduled time and publish approved posts now")
+                        help="publish EVERY approved post now, ignoring every "
+                             "scheduled time. Rarely what you want.")
+    parser.add_argument("--yes", action="store_true",
+                        help="confirm a --force that would publish future-dated posts")
     args = parser.parse_args()
 
     conn = store.connect()
-    due = list(store.due_for_publish(conn))
-    if args.force:
-        due = conn.execute("SELECT * FROM posts WHERE status = 'approved' ORDER BY id").fetchall()
+
+    if args.ids:
+        due = [r for r in (store.get_post(conn, i) for i in args.ids) if r]
+        missing = set(args.ids) - {r["id"] for r in due}
+        if missing:
+            print(f"no such post: {sorted(missing)}", file=sys.stderr)
+            return 1
+        wrong = [r["id"] for r in due if r["status"] != "approved"]
+        if wrong:
+            print(f"not approved, refusing: {wrong}", file=sys.stderr)
+            return 1
+    elif args.force:
+        # --force ignores every schedule, so say exactly what it is about to do.
+        due = conn.execute(
+            "SELECT * FROM posts WHERE status = 'approved' ORDER BY id").fetchall()
+        future = [r for r in due if r["scheduled_for"] and r["scheduled_for"] > store.now()]
+        if future:
+            print("--force would publish posts scheduled for later:", file=sys.stderr)
+            for r in future:
+                print(f"  #{r['id']} {r['title']} — due {r['scheduled_for']} "
+                      f"(target {r['target_date']})", file=sys.stderr)
+            if not args.yes:
+                print("\nRefusing. Use --id N to publish one post, or add --yes "
+                      "to confirm publishing all of the above now.", file=sys.stderr)
+                return 1
+    else:
+        due = list(store.due_for_publish(conn))
+
     if not due:
         return 0
 
