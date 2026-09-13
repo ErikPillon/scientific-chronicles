@@ -188,9 +188,17 @@
                         {{ if .image }}
                           {{ $img := resources.Get (printf "images/%s" .image) }}
                           {{ if $img }}
+                            {{/* try: one undecodable asset must not fail the
+                                 whole build. Fall back to the source image. */}}
                             {{ $thumb := $img }}
                             {{ if eq $img.ResourceType "image" }}
-                              {{ $thumb = $img.Fill "288x288 Center q82" }}
+                              {{ with try ($img.Fill "288x288 Center q82") }}
+                                {{ with .Err }}
+                                  {{ warnf "thumbnail failed for %s: %s" $img.Name . }}
+                                {{ else }}
+                                  {{ $thumb = .Value }}
+                                {{ end }}
+                              {{ end }}
                             {{ end }}
                             <div class="person-avatar">
                               <img src="{{ $thumb.RelPermalink }}" width="144" height="144"
@@ -268,9 +276,17 @@
                         {{ if .image }}
                           {{ $img := resources.Get (printf "images/%s" .image) }}
                           {{ if $img }}
+                            {{/* try: one undecodable asset must not fail the
+                                 whole build. Fall back to the source image. */}}
                             {{ $thumb := $img }}
                             {{ if eq $img.ResourceType "image" }}
-                              {{ $thumb = $img.Fill "288x288 Center q82" }}
+                              {{ with try ($img.Fill "288x288 Center q82") }}
+                                {{ with .Err }}
+                                  {{ warnf "thumbnail failed for %s: %s" $img.Name . }}
+                                {{ else }}
+                                  {{ $thumb = .Value }}
+                                {{ end }}
+                              {{ end }}
                             {{ end }}
                             <div class="person-avatar">
                               <img src="{{ $thumb.RelPermalink }}" width="144" height="144"
